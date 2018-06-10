@@ -3,7 +3,9 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
+require('./services/passport');
 const routes = require('./routes');
 const code = require('./utils/statusCodes');
 
@@ -13,6 +15,8 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 routes(app);
 

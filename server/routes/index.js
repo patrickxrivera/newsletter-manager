@@ -5,5 +5,7 @@ const UserController = require('../controllers/user');
 
 module.exports = (app) => {
   // User
-  app.get('/api/authorize', UserController.authorize);
+  app.get('/api/authorize', UserController.authenticate);
+
+  app.get('/auth/google/callback?*', UserController.redirect);
 };
