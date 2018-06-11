@@ -9,7 +9,7 @@ export const AppStyles = injectGlobal`
 `;
 
 export const Wrapper = styled.div`
-  color: rgba(255, 255, 255, 0.7);
+  color: 'black';
   fill: currentcolor;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.35;
