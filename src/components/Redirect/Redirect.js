@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { signInUser } from '../../actions/auth';
-import parseTokenParams from './helpers/parseAuthParams';
+import parseParams from './helpers/parseParams';
 
 class Redirect extends Component {
   componentDidMount() {
     const { signInUser, history } = this.props;
-    const tokens = parseTokenParams(window.location.search);
+    const id = parseParams(window.location.search);
 
-    signInUser(tokens);
-
+    signInUser(id);
+    console.log(id);
     history.push('/dashboard');
   }
 

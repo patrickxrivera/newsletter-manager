@@ -1,8 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-const initialState = {
-  refreshToken: '1/4uTScAvQLvhKBZxKKHYIro0albJG_hKIW5aNSEvqSGc'
-};
+const initialState = {};
 
 export default handleActions(
   {

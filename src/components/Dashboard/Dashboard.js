@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
+const DEV_MESSAGES = 'http://localhost:8080/api/messages';
 
 class Dashboard extends Component {
   getMessageIds = async () => {
-    const messageIds = await axios.get('http://localhost:8080/api/messages');
+    const { id } = this.props;
+    const newsletters = await axios.post(DEV_MESSAGES, { id });
 
-    console.log(messageIds);
+    console.log(newsletters.data);
   };
 
   render() {
-    return <div>Dashboard</div>;
+    return <button onClick={this.getMessageIds}>Get Message Ids</button>;
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  id: state.auth.id
+});
+
+export default connect(mapStateToProps)(Dashboard);
