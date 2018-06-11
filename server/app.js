@@ -17,6 +17,7 @@ routes(app);
 
 // Custom middleware for error handling
 app.use((message, req, res, next) => {
+  console.log(message);
   res.status(code.USER_ERROR).send({ error: { code: code.USER_ERROR, message } });
 });
 

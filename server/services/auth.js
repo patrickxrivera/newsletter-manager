@@ -13,7 +13,7 @@ const Auth = {
     return tokens;
   },
 
-  setCredentials: async (tokens) => {
+  setCredentials: (tokens) => {
     Auth.oAuth2Client.setCredentials(tokens);
 
     return Auth.oAuth2Client;
