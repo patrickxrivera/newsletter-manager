@@ -24,7 +24,15 @@ const Auth = {
       approval_prompt: 'force',
       access_type: 'offline',
       scope: Auth.scopes.join(' ')
-    })
+    }),
+
+  refreshAccessToken: (refresh_token) => {
+    Auth.oAuth2Client.setCredentials({
+      refresh_token
+    });
+
+    return Auth.oAuth2Client.refreshAccessToken();
+  }
 };
 
 module.exports = Auth;

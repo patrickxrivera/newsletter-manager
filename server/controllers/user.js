@@ -2,6 +2,7 @@ const queryString = require('querystring');
 
 const keys = require('../keys');
 const Auth = require('../services/auth');
+const Gmail = require('../services/gmailAPI');
 
 const authenticate = async (req, res) => {
   const authURL = Auth.getAuthURL();
@@ -20,8 +21,8 @@ const redirect = async (req, res, next) => {
 };
 
 const getMessages = async (req, res, next) => {
-  // const messageIds = await Auth.getMessageIdsByQuery().catch(next);
-
+  const messageIds = await Gmail.getMessageIdsByQuery(req.body.refreshToken);
+  console.log(messageIds);
   res.send({});
 };
 

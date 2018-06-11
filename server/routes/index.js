@@ -7,5 +7,5 @@ module.exports = (app) => {
   // User
   app.get('/api/authorize', UserController.authenticate);
   app.get('/auth/google/callback?*', UserController.redirect);
-  app.get('/api/messages', UserController.getMessages);
+  app.post('/api/messages', UserController.getMessages);
 };
