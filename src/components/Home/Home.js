@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const DEV_AUTHORIZE = 'http://localhost:8080/api/authorize';
+import Dashboard from '../Dashboard/Dashboard';
+import LandingPage from '../LandingPage/LandingPage';
+import { getIsAuthenticated } from '../../reducers/auth';
 
-const Home = () => (
-  <button>
-    <a href={DEV_AUTHORIZE}>Sign In</a>
-  </button>
-);
+const Home = ({ isAuthenticated }) => (isAuthenticated ? <Dashboard /> : <LandingPage />);
 
-export default Home;
+const mapStateToProps = (state) => ({
+  isAuthenticated: getIsAuthenticated(state)
+});
+
+export default connect(mapStateToProps)(Home);

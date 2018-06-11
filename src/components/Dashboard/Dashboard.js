@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 
 const DEV_MESSAGES = 'http://localhost:8080/api/messages';
 
@@ -13,7 +14,13 @@ class Dashboard extends Component {
   };
 
   render() {
-    return <button onClick={this.getMessageIds}>Get Message Ids</button>;
+    return (
+      <div>
+        <Button variant="contained" color="primary" onClick={this.getMessageIds}>
+          Get Message Ids
+        </Button>
+      </div>
+    );
   }
 }
 
