@@ -12,25 +12,22 @@ const authenticate = async (req, res) => {
 
 const redirect = async (req, res, next) => {
   const tokens = await Auth.getCredentials(req);
-
   const { data } = await Gmail.getProfile(tokens);
+  const [id] = await query.createUser(tokens, data).catch(next);
 
-  const user = await query.createUser(tokens, data).catch(next);
+  if (!id) return;
 
-  if (!user) return;
-
-  res.redirect(
-    keys.frontendRedirect +
-      queryString.stringify({
-        ...tokens
-      })
-  );
+  res.redirect(keys.frontendRedirect + queryString.stringify({ ...id }));
 };
 
 const getMessages = async (req, res, next) => {
-  const messageIds = await Gmail.getMessageIdsByQuery(req.body.refreshToken);
-  console.log(messageIds);
-  res.send({});
+  const updatedTokens = await Auth.updateTokens(req, next);
+
+  if (!updatedTokens) return;
+
+  const newsletters = await Gmail.getNewsletterMessages(updatedTokens);
+
+  res.send(newsletters);
 };
 
 module.exports = {

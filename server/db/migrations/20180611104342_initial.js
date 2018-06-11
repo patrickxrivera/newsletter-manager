@@ -2,10 +2,9 @@ exports.up = (knex, Promise) =>
   Promise.all([
     knex.schema.createTable('user_account', (table) => {
       table.increments('id').primary();
-      table.string('email_address');
+      table.string('email_address').unique();
       table.string('access_token');
       table.string('refresh_token');
-      table.integer('expiration_date');
     }),
 
     knex.schema.createTable('newsletter', (table) => {
@@ -36,5 +35,5 @@ exports.down = (knex, Promise) =>
     knex.schema.dropTable('newsletter_email'),
     knex.schema.dropTable('email'),
     knex.schema.dropTable('newsletter'),
-    knex.schema.dropTable('user')
+    knex.schema.dropTable('user_account')
   ]);
