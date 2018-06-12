@@ -16,6 +16,7 @@ export const BackgroundImg = styled.img`
 export const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  margin-right: 8px;
 `;
 
 export const HeadlineWrapper = styled.div`
@@ -38,9 +39,17 @@ export const Description = styled.div`
   margin-top: 0.5rem;
 `;
 
+export const ButtonArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+`;
+
 export const primaryButton = {
   marginTop: '2rem',
   color: '#fff',
   backgroundColor: '#34a853',
-  height: '50px'
+  height: '60px',
+  width: '265px'
 };

@@ -8,12 +8,11 @@ export default handleActions(
       ...state,
       ...action.payload,
       isAuthenticated: true
-    }),
-    SIGN_OUT_USER: (state, action) => ({
-      isAuthenticated: false
     })
   },
   initialState
 );
 
 export const getIsAuthenticated = ({ auth }) => auth.isAuthenticated;
+
+export const getId = ({ auth }) => auth.id;

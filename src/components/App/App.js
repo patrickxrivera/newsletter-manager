@@ -4,7 +4,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import NavContainer from '../Nav/NavContainer';
 import Home from '../Home/Home';
-import Dashboard from '../Dashboard/Dashboard';
+import DashboardContainer from '../Dashboard/DashboardContainer';
 import Redirect from '../Redirect/Redirect';
 import RequireAuth from '../RequireAuth/RequireAuth';
 import { Wrapper, theme } from './AppStyles';
@@ -16,7 +16,7 @@ const App = () => (
         <NavContainer />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/dashboard" component={RequireAuth(Dashboard)} />
+          <Route path="/dashboard" component={RequireAuth(DashboardContainer)} />
           <Route path="/redirect" component={Redirect} />
         </Switch>
       </Wrapper>

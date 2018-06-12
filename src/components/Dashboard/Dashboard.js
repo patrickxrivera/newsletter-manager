@@ -1,31 +1,12 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
+import React from 'react';
 
-const DEV_MESSAGES = 'http://localhost:8080/api/messages';
+import { Wrapper, InnerWrapper } from './DashboardStyles';
+import EnhancedTable from './EnhancedTable';
 
-class Dashboard extends Component {
-  getMessageIds = async () => {
-    const { id } = this.props;
-    const newsletters = await axios.post(DEV_MESSAGES, { id });
+const Dashboard = ({ emails }) => (
+  <Wrapper>
+    <InnerWrapper>{emails.length && <EnhancedTable emails={emails} />}</InnerWrapper>
+  </Wrapper>
+);
 
-    console.log(newsletters.data);
-  };
-
-  render() {
-    return (
-      <div>
-        <Button variant="contained" color="primary" onClick={this.getMessageIds}>
-          Get Message Ids
-        </Button>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => ({
-  id: state.auth.id
-});
-
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

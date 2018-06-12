@@ -1,4 +1,4 @@
-export const fetchHackerNewsArticlesSuccess = (articles) => ({
-  type: 'FETCH_HACKER_NEWS_ARTICLES',
-  articles
+export const fetchInitialEmailsSuccess = (emails) => ({
+  type: 'FETCH_INITIAL_EMAILS',
+  emails
 });

@@ -9,7 +9,6 @@ import { getIsAuthenticated } from '../../reducers/auth';
 class NavContainer extends Component {
   handleSignOutClick = () => {
     const { signOutUser, history } = this.props;
-
     signOutUser();
     history.push('/');
   };
@@ -23,4 +22,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: getIsAuthenticated(state)
 });
 
-export default connect(mapStateToProps, { signOutUser })(withRouter(Nav));
+export default connect(mapStateToProps, { signOutUser })(withRouter(NavContainer));
