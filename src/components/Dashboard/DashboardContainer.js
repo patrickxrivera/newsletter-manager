@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { isEmpty } from 'ramda';
 
 import Dashboard from './Dashboard';
-import { fetchInitialEmails } from '../../actions/labels';
+import { fetchInitialEmails, deleteEmails } from '../../actions/labels';
 import { getId } from '../../reducers/auth';
 import { getInitialEmails } from '../../reducers/labels';
 
@@ -26,4 +26,4 @@ const mapStateToProps = (state) => ({
   emails: getInitialEmails(state)
 });
 
-export default connect(mapStateToProps, { fetchInitialEmails })(DashboardContainer);
+export default connect(mapStateToProps, { fetchInitialEmails, deleteEmails })(DashboardContainer);

@@ -1,3 +1,5 @@
+import { createAction } from 'redux-actions';
+
 import api from '../api';
 import * as D from '../utils/dispatchHelpers';
 
@@ -6,3 +8,5 @@ export const fetchInitialEmails = (id) => async (dispatch) => {
 
   dispatch(D.fetchInitialEmailsSuccess(initialEmails.data));
 };
+
+export const deleteEmails = createAction('DELETE_EMAILS');

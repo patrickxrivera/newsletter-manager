@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 
 export const Wrapper = styled.div`
   height: 80vh;
@@ -16,7 +17,6 @@ export const BackgroundImg = styled.img`
 export const Link = styled.a`
   text-decoration: none;
   color: inherit;
-  margin-right: 8px;
 `;
 
 export const HeadlineWrapper = styled.div`
@@ -28,13 +28,13 @@ export const HeadlineWrapper = styled.div`
 `;
 
 export const Headline = styled.div`
-  font-size: 50px;
+  font-size: 45px;
   margin-bottom: 1rem;
   margin-top: 13rem;
 `;
 
 export const Description = styled.div`
-  font-size: 25px;
+  font-size: 30px;
   opacity: 0.8;
   margin-top: 0.5rem;
 `;
@@ -46,10 +46,17 @@ export const ButtonArea = styled.div`
   font-size: 18px;
 `;
 
+export const Text = styled.span`
+  margin-right: 8px;
+`;
+
+export const Btn = styled(Button)``;
+
 export const primaryButton = {
   marginTop: '2rem',
   color: '#fff',
   backgroundColor: '#34a853',
   height: '60px',
-  width: '265px'
+  width: '265px',
+  background: 'linearGradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))'
 };

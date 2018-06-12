@@ -8,5 +8,17 @@ export const Wrapper = styled.div`
 
 export const InnerWrapper = styled.div`
   margin-top: 2rem;
-  padding-top: 5rem;
+  padding-top: 1rem;
+`;
+
+export const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 5rem;
+`;
+
+export const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;

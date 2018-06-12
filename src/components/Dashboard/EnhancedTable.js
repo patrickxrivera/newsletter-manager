@@ -124,7 +124,7 @@ let EnhancedTableToolbar = (props) => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
+            <IconButton onClick={props.handleDeleteClick} aria-label="Delete">
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -157,21 +157,20 @@ const styles = (theme) => ({
 });
 
 class EnhancedTable extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    order: 'asc',
+    selected: [],
+    page: 0,
+    rowsPerPage: 10
+  };
 
-    this.state = {
-      order: 'asc',
-      selected: [],
-      page: 0,
-      rowsPerPage: 5,
-      emails: this.props.emails
-    };
-  }
+  handleDeleteClick = () => {
+    this.props.deleteEmails(this.state.selected);
+  };
 
   handleSelectAllClick = (event, checked) => {
     if (checked) {
-      this.setState({ selected: this.state.emails.map((e) => e.accountName) });
+      this.setState({ selected: this.props.emails.map((e) => e.accountName) });
       return;
     }
     this.setState({ selected: [] });
@@ -209,13 +208,18 @@ class EnhancedTable extends React.Component {
   isSelected = (id) => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
-    const { emails, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { classes, emails } = this.props;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, emails.length - page * rowsPerPage);
 
     return (
-      <Paper style={{ margin: '0 auto', width: '50%' }} className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+      <Paper
+        style={{ marginTop: '0px', width: '50%', borderRadius: '10px' }}
+        className={classes.root}>
+        <EnhancedTableToolbar
+          handleDeleteClick={this.handleDeleteClick}
+          numSelected={selected.length}
+        />
         <div className={classes.tableWrapper}>
           <Table
             style={{ minWidth: '50px' }}
@@ -271,7 +275,6 @@ class EnhancedTable extends React.Component {
             'aria-label': 'Next Page'
           }}
           onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
       </Paper>
     );

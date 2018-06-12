@@ -1,11 +1,26 @@
 import React from 'react';
 
-import { Wrapper, InnerWrapper } from './DashboardStyles';
+import Loading from '../Loading/Loading';
 import EnhancedTable from './EnhancedTable';
+import ConfirmContainer from '../Form/Confirm/ConfirmContainer';
+import { Wrapper, InnerWrapper, ContentWrapper, FormWrapper } from './DashboardStyles';
+import './styles.css';
 
-const Dashboard = ({ emails }) => (
+const Dashboard = ({ emails, ...rest }) => (
   <Wrapper>
-    <InnerWrapper>{emails.length && <EnhancedTable emails={emails} />}</InnerWrapper>
+    <InnerWrapper>
+      {emails.length ? (
+        <ContentWrapper className="fade-in">
+          <EnhancedTable emails={emails} {...rest} />
+          <FormWrapper>
+            <ConfirmContainer />
+            <ConfirmContainer />
+          </FormWrapper>
+        </ContentWrapper>
+      ) : (
+        <Loading />
+      )}
+    </InnerWrapper>
   </Wrapper>
 );
 
