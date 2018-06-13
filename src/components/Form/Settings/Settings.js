@@ -8,7 +8,7 @@ import * as Style from './SettingsStyles';
 
 const Confirm = ({ handleSubmit, handleFormSubmit, input }) => (
   <Style.Wrapper>
-    <Typography variant="title" id="formTitle">
+    <Typography style={Style.title} variant="title" id="formTitle">
       Label Settings
     </Typography>
 
@@ -27,7 +27,7 @@ const renderSettingsForm = ({ input }) => (
           label="Name"
           floatingLabelText="Name"
           hintText="Label name that will appear in Gmail"
-          style={{ width: '260px' }}
+          style={{ width: '270px', marginTop: '-10px' }}
           underlineFocusStyle={Style.textField.underlineFocusStyle}
           floatingLabelFocusStyle={Style.textField.floatingLabelFocusStyle}
         />

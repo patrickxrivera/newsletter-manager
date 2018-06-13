@@ -24,10 +24,10 @@ const styles = (theme) => ({
 });
 
 const ChipsArray = (props) => {
-  const { classes, deleteAdditionalNewsletter, newsletters } = props;
+  const { classes, deleteAdditionalNewsletter, additionalNewsletters } = props;
   return (
     <Paper className={classes.root}>
-      {newsletters.map(renderNewsletter(deleteAdditionalNewsletter, classes))}
+      {additionalNewsletters.map(renderNewsletter(deleteAdditionalNewsletter, classes))}
     </Paper>
   );
 };

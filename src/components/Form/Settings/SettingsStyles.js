@@ -55,3 +55,8 @@ export const primaryButton = {
   height: '40px',
   width: '200px'
 };
+
+export const title = {
+  borderBottom: '2px solid #f5f7f9',
+  paddingBottom: '10px'
+};

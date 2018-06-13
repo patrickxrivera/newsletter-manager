@@ -46,11 +46,11 @@ export const NewslettersList = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.25rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 `;
 
 export const PlaceholderText = styled.span`
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 `;
 
 export const NewslettersListHeading = styled.span`
@@ -59,4 +59,9 @@ export const NewslettersListHeading = styled.span`
 
 export const subheading = {
   marginTop: '12px'
+};
+
+export const title = {
+  borderBottom: '2px solid #f5f7f9',
+  paddingBottom: '10px'
 };

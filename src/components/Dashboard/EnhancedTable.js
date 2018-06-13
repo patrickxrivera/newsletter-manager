@@ -115,7 +115,14 @@ let EnhancedTableToolbar = (props) => {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="title" id="tableTitle">
+          <Typography
+            style={{
+              borderBottom: '2px solid #f5f7f9',
+              paddingBottom: '10px',
+              width: '580px'
+            }}
+            variant="title"
+            id="tableTitle">
             Your Newsletters
           </Typography>
         )}
@@ -219,7 +226,11 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper
-        style={{ marginTop: '0px', width: '50%', borderRadius: '10px' }}
+        style={{
+          marginTop: '0px',
+          width: '50%',
+          borderRadius: '10px'
+        }}
         className={classes.root}>
         <EnhancedTableToolbar
           handleDeleteClick={this.handleDeleteClick}

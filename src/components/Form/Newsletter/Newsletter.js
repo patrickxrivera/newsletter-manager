@@ -8,7 +8,7 @@ import ChipArray from './ChipArray';
 
 const Newsletter = ({ handleSubmit, handleFormSubmit, input, ...rest }) => (
   <Style.Wrapper>
-    <Typography variant="title" id="formTitle">
+    <Typography style={Style.title} variant="title" id="formTitle">
       Did we miss any?
     </Typography>
     <Typography style={Style.subheading} variant="subheading" id="formSubscript">
@@ -33,13 +33,13 @@ const renderNewsletterForm = ({ input, additionalNewsletters }) => [
   <Style.NewslettersList key={3}>
     {isEmpty(additionalNewsletters)
       ? renderPlaceholder()
-      : renderAdditionalNewsletters(additionalNewsletters)}
+      : renderAdditionalNewsletters({ additionalNewsletters })}
   </Style.NewslettersList>
 ];
 
-const renderAdditionalNewsletters = (additionalNewsletters) => [
+const renderAdditionalNewsletters = (props) => [
   <Style.NewslettersListHeading key={1}>Additional Newsletters</Style.NewslettersListHeading>,
-  <ChipArray key={2} newsletters={additionalNewsletters} />
+  <ChipArray key={2} {...props} />
 ];
 
 const renderPlaceholder = () => (

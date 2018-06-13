@@ -3,12 +3,15 @@ import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import Newsletter from './Newsletter';
+import { clearInputField } from '../../../actions/form';
 import { getAdditionalNewsletters } from '../../../reducers/labels';
 import { addAdditionalNewsletter } from '../../../actions/labels';
 
 class NewsletterContainer extends Component {
   handleFormSubmit = ({ query }) => {
-    this.props.addAdditionalNewsletter(query);
+    const { addAdditionalNewsletter, clearInputField } = this.props;
+    addAdditionalNewsletter(query);
+    clearInputField();
   };
 
   render() {
@@ -20,7 +23,7 @@ const mapStateToProps = (state) => ({
   additionalNewsletters: getAdditionalNewsletters(state)
 });
 
-export default connect(mapStateToProps, { addAdditionalNewsletter })(
+export default connect(mapStateToProps, { addAdditionalNewsletter, clearInputField })(
   reduxForm({
     form: 'newsletters',
     fields: ['query']

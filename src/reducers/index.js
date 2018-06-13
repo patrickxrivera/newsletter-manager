@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 
+import formReducerEnhanced from './form';
 import authReducer from './auth';
 import labelsReducer from './labels';
 
 const appReducer = combineReducers({
-  form: formReducer,
+  form: formReducerEnhanced,
   auth: authReducer,
   labels: labelsReducer
 });
