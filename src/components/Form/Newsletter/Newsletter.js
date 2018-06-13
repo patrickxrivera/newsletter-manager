@@ -1,6 +1,5 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import { Field } from 'redux-form';
 import { isEmpty } from 'ramda';
 
@@ -20,27 +19,23 @@ const Newsletter = ({ handleSubmit, handleFormSubmit, input, ...rest }) => (
         label="Query"
         name="query"
         type="input"
-        component={(props) => renderNewsletterForm({ props, rest })}
+        props={rest}
+        component={renderNewsletterForm}
         {...input}
       />
     </form>
   </Style.Wrapper>
 );
 
-const renderNewsletterForm = ({ props, rest }) => {
-  const { additionalNewsletters } = rest;
-  const { input } = props;
-
-  return [
-    <Style.SearchIcon key={1} />,
-    <Style.Input key={2} placeholder="Enter newsletter" {...input} />,
-    <Style.NewslettersList key={3}>
-      {isEmpty(additionalNewsletters)
-        ? renderPlaceholder()
-        : renderAdditionalNewsletters(additionalNewsletters)}
-    </Style.NewslettersList>
-  ];
-};
+const renderNewsletterForm = ({ input, additionalNewsletters }) => [
+  <Style.SearchIcon key={1} />,
+  <Style.Input key={2} placeholder="Enter newsletter" {...input} />,
+  <Style.NewslettersList key={3}>
+    {isEmpty(additionalNewsletters)
+      ? renderPlaceholder()
+      : renderAdditionalNewsletters(additionalNewsletters)}
+  </Style.NewslettersList>
+];
 
 const renderAdditionalNewsletters = (additionalNewsletters) => [
   <Style.NewslettersListHeading key={1}>Additional Newsletters</Style.NewslettersListHeading>,

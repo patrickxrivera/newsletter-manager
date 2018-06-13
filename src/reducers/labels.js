@@ -19,6 +19,7 @@ export default handleActions(
     DELETE_EMAILS: (state, action) => ({
       ...state,
       unsaved: {
+        additionalNewsletters: [...state.unsaved.additionalNewsletters],
         emails: state.unsaved.emails.filter(isSelected(action.payload))
       }
     }),
