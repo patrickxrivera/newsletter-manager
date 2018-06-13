@@ -26,6 +26,8 @@ const renderSettingsForm = ({ input }) => (
           id="name"
           label="Name"
           floatingLabelText="Name"
+          hintText="Label name that will appear in Gmail"
+          style={{ width: '260px' }}
           underlineFocusStyle={Style.textField.underlineFocusStyle}
           floatingLabelFocusStyle={Style.textField.floatingLabelFocusStyle}
         />

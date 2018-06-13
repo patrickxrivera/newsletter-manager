@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
 import Newsletter from './Newsletter';
+import { getAdditionalNewsletters } from '../../../reducers/labels';
+import { addAdditionalNewsletter } from '../../../actions/labels';
 
 class NewsletterContainer extends Component {
-  handleFormSubmit = (formProps) => {
-    console.log(formProps);
+  handleFormSubmit = ({ query }) => {
+    this.props.addAdditionalNewsletter(query);
   };
 
   render() {
-    return <Newsletter handleFormSubmit={(vals) => console.log(vals)} {...this.props} />;
+    return <Newsletter handleFormSubmit={this.handleFormSubmit} {...this.props} />;
   }
 }
 
-export default reduxForm({
-  form: 'newsletters',
-  fields: ['query']
-})(NewsletterContainer);
+const mapStateToProps = (state) => ({
+  additionalNewsletters: getAdditionalNewsletters(state)
+});
+
+export default connect(mapStateToProps, { addAdditionalNewsletter })(
+  reduxForm({
+    form: 'newsletters',
+    fields: ['query']
+  })(NewsletterContainer)
+);

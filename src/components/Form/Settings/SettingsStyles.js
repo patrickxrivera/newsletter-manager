@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Checkbox from 'material-ui/Checkbox';
 import Button from '@material-ui/core/Button';
-import { Search } from 'react-feather';
 
 export const Wrapper = styled.div`
   width: 570px;
@@ -10,7 +9,7 @@ export const Wrapper = styled.div`
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   padding: 24px;
-  min-height: 270px;
+  min-height: 275px;
 `;
 
 export const CheckboxIcon = styled(Checkbox)`

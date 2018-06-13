@@ -10,3 +10,7 @@ export const fetchInitialEmails = (id) => async (dispatch) => {
 };
 
 export const deleteEmails = createAction('DELETE_EMAILS');
+
+export const addAdditionalNewsletter = createAction('ADD_ADDITIONAL_NEWSLETTER');
+
+export const deleteAdditionalNewsletter = createAction('DELETE_ADDITIONAL_NEWSLETTER');

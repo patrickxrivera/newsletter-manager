@@ -1,11 +1,13 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Field } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
+import { Field } from 'redux-form';
+import { isEmpty } from 'ramda';
 
 import * as Style from './NewsletterStyles';
+import ChipArray from './ChipArray';
 
-const Newsletter = ({ handleSubmit, handleFormSubmit, input }) => (
+const Newsletter = ({ handleSubmit, handleFormSubmit, input, ...rest }) => (
   <Style.Wrapper>
     <Typography variant="title" id="formTitle">
       Did we miss any?
@@ -14,17 +16,39 @@ const Newsletter = ({ handleSubmit, handleFormSubmit, input }) => (
       Add newsletters below:
     </Typography>
     <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <Field label="Query" name="query" type="input" component={renderNewsletterForm} {...input} />
+      <Field
+        label="Query"
+        name="query"
+        type="input"
+        component={(props) => renderNewsletterForm({ props, rest })}
+        {...input}
+      />
     </form>
   </Style.Wrapper>
 );
 
-const renderNewsletterForm = ({ input }) => [
-  <Style.SearchIcon key={1} />,
-  <Style.Input key={2} placeholder="Enter newsletter" {...input} />,
-  <Style.NewslettersList>
-    <Style.PlaceholderText>No additional newsletters added yet.</Style.PlaceholderText>
-  </Style.NewslettersList>
+const renderNewsletterForm = ({ props, rest }) => {
+  const { additionalNewsletters } = rest;
+  const { input } = props;
+
+  return [
+    <Style.SearchIcon key={1} />,
+    <Style.Input key={2} placeholder="Enter newsletter" {...input} />,
+    <Style.NewslettersList key={3}>
+      {isEmpty(additionalNewsletters)
+        ? renderPlaceholder()
+        : renderAdditionalNewsletters(additionalNewsletters)}
+    </Style.NewslettersList>
+  ];
+};
+
+const renderAdditionalNewsletters = (additionalNewsletters) => [
+  <Style.NewslettersListHeading key={1}>Additional Newsletters</Style.NewslettersListHeading>,
+  <ChipArray key={2} newsletters={additionalNewsletters} />
 ];
+
+const renderPlaceholder = () => (
+  <Style.PlaceholderText>No additional newsletters added yet.</Style.PlaceholderText>
+);
 
 export default Newsletter;

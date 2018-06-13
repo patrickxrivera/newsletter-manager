@@ -3,7 +3,7 @@ import ReactLoading from 'react-loading';
 
 import { Wrapper, LoadingWrapper, Text } from './LoadingStyles';
 
-const Loading = ({}) => (
+const Loading = () => (
   <Wrapper>
     <LoadingWrapper>
       <Text>One moment, our robots are searching for your newsletters now.</Text>

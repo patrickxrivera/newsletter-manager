@@ -45,11 +45,17 @@ export const SearchIcon = styled(Search)`
 export const NewslettersList = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 4rem;
   font-size: 1.25rem;
+  margin-top: 2rem;
 `;
 
-export const PlaceholderText = styled.span``;
+export const PlaceholderText = styled.span`
+  margin-top: 2rem;
+`;
+
+export const NewslettersListHeading = styled.span`
+  margin-bottom: 1rem;
+`;
 
 export const subheading = {
   marginTop: '12px'

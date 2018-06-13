@@ -124,7 +124,11 @@ let EnhancedTableToolbar = (props) => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton onClick={props.handleDeleteClick} aria-label="Delete">
+            <IconButton
+              onClick={() => {
+                props.handleDeleteClick();
+              }}
+              aria-label="Delete">
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -165,6 +169,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleDeleteClick = () => {
+    this.handleSelectAllClick();
     this.props.deleteEmails(this.state.selected);
   };
 

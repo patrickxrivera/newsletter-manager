@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 
 export const Wrapper = styled.div`
   height: 80vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
   margin-top: 1.5rem;
 `;
 
@@ -30,12 +30,12 @@ export const HeadlineWrapper = styled.div`
 export const Headline = styled.div`
   font-size: 45px;
   margin-bottom: 1rem;
-  margin-top: 13rem;
+  margin-top: 17rem;
 `;
 
 export const Description = styled.div`
   font-size: 30px;
-  opacity: 0.8;
+  opacity: 0.9;
   margin-top: 0.5rem;
 `;
 
