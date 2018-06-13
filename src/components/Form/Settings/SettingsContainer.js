@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 
-import Confirm from './Confirm';
+import Settings from './Settings';
 
-class ConfirmContainer extends Component {
+class SettingsContainer extends Component {
   handleFormSubmit = (formProps) => {
     console.log(formProps);
   };
 
   render() {
-    return <Confirm handleFormSubmit={(vals) => console.log(vals)} {...this.props} />;
+    return <Settings handleFormSubmit={(vals) => console.log(vals)} {...this.props} />;
   }
 }
 
 export default reduxForm({
   form: 'newsletters',
   fields: ['query']
-})(ConfirmContainer);
+})(SettingsContainer);
