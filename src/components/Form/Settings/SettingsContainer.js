@@ -13,31 +13,35 @@ class SettingsContainer extends Component {
     checkboxTwo: true,
     isInputError: false,
     isCheckboxError: false,
-    value: ''
+    labelName: ''
   };
 
-  handleFormSubmit = ({ name }) => {
-    if (this.isUndefined(name)) {
+  handleFormSubmit = () => {
+    const { labelName } = this.state;
+
+    if (isEmpty(labelName)) {
       this.setState({ isInputError: true });
       return;
     }
 
     this.checkboxesAreEmpty()
       ? this.setState({ isCheckboxError: true })
-      : this.handleAddNewslettersToLabel(name);
+      : this.handleAddNewslettersToLabel(labelName);
   };
 
-  handleAddNewslettersToLabel = (name) => {
+  handleAddNewslettersToLabel = (labelName) => {
     const { checkboxOne, checkboxTwo } = this.state;
     const { additionalNewsletters, emailAddresses, addNewslettersToLabel } = this.props;
 
     addNewslettersToLabel({
-      name,
+      labelName,
       additionalNewsletters,
       emailAddresses,
       checkboxOne,
       checkboxTwo
     });
+
+    this.setState({ labelName: '' });
   };
 
   isUndefined = (val) => val === undefined;
@@ -45,11 +49,11 @@ class SettingsContainer extends Component {
   checkboxesAreEmpty = () => this.state.checkboxOne === false && this.state.checkboxTwo === false;
 
   handleInputChange = (e) => {
-    this.setState({ value: e.target.value }, () => {
-      const { value, isInputError } = this.state;
+    this.setState({ labelName: e.target.value }, () => {
+      const { labelName, isInputError } = this.state;
 
       // reset error if it's true and the input isn't empty
-      if (isInputError && value) {
+      if (isInputError && labelName) {
         this.setState({ isInputError: false });
       }
     });

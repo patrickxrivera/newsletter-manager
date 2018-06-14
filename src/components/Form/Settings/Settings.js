@@ -32,7 +32,7 @@ const renderSettingsForm = ({ input, isInputError, meta: { touched }, ...props }
         <TextField
           {...input}
           onChange={props.handleInputChange}
-          value={props.value}
+          value={props.labelName}
           id="name"
           label="Name"
           floatingLabelText="Name"
