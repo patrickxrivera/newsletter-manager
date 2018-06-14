@@ -8,12 +8,16 @@ export const Wrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
-  padding: 24px;
-  min-height: 275px;
+  padding: 24px 24px 9px;
+  min-height: 280px;
 `;
 
 export const CheckboxIcon = styled(Checkbox)`
-  margin-top: 1rem;
+  margin-top: 0.8rem;
+`;
+
+export const CheckboxWrapper = styled.div`
+  padding-top: 1.5rem;
 `;
 
 export const ButtonArea = styled.div`
@@ -31,6 +35,7 @@ export const SettingsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 240px;
 `;
 
 export const Btn = styled(Button)``;
@@ -49,7 +54,6 @@ export const checkbox = {
 };
 
 export const primaryButton = {
-  marginTop: '3rem',
   color: '#fff',
   backgroundColor: '#34a853',
   height: '40px',
