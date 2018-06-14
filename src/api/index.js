@@ -1,5 +1,5 @@
-import labels from './labels';
+import unsavedLabels from './labels/unsaved';
 
 export default {
-  ...labels
+  ...unsavedLabels
 };

@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 
-import { deleteAdditionalNewsletter } from '../../../actions/labels';
+import { deleteAdditionalNewsletter } from '../../../actions/labels/unsaved';
 
 const styles = (theme) => ({
   root: {

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { isEmpty } from 'ramda';
 
 import Dashboard from './Dashboard';
-import { fetchInitialEmails, deleteEmails } from '../../actions/labels';
+import { fetchInitialEmails, deleteEmails } from '../../actions/labels/unsaved';
 import { getId } from '../../reducers/auth';
-import { getInitialEmails } from '../../reducers/labels';
+import { getInitialEmails } from '../../reducers/labels/unsaved';
 
 class DashboardContainer extends Component {
   componentDidMount() {

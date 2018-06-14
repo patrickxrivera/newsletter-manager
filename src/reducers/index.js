@@ -2,12 +2,12 @@ import { combineReducers } from 'redux';
 
 import formReducerEnhanced from './form';
 import authReducer from './auth';
-import labelsReducer from './labels';
+import unsavedLabelsReducer from './labels/unsaved';
 
 const appReducer = combineReducers({
   form: formReducerEnhanced,
   auth: authReducer,
-  labels: labelsReducer
+  unsavedLabels: unsavedLabelsReducer
 });
 
 // clear state on sign out

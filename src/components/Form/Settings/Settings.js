@@ -63,7 +63,7 @@ const renderSettingsForm = ({ input, isInputError, meta: { touched }, ...props }
       <div>
         <Style.Btn type="submit" style={Style.primaryButton} variant="raised">
           <Style.ButtonArea>
-            <Style.Text>Confirm</Style.Text>
+            <Style.Text>Create Label</Style.Text>
           </Style.ButtonArea>
         </Style.Btn>
       </div>

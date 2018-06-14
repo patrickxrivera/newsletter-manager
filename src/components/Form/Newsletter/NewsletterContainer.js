@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import Newsletter from './Newsletter';
 import { clearInputField } from '../../../actions/form';
-import { getAdditionalNewsletters } from '../../../reducers/labels';
-import { addAdditionalNewsletter } from '../../../actions/labels';
+import { getAdditionalNewsletters } from '../../../reducers/labels/unsaved';
+import { addAdditionalNewsletter } from '../../../actions/labels/unsaved';
 
 class NewsletterContainer extends Component {
   handleFormSubmit = ({ query }) => {

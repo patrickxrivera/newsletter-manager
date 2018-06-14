@@ -18,12 +18,19 @@ export default class DialogExampleSimple extends React.Component {
 
   render() {
     const actions = [
-      <FlatButton label="Ok" primary={true} keyboardFocused={true} onClick={this.handleClose} />
+      <FlatButton
+        labelStyle={{ color: 'red' }}
+        label="Ok"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleClose}
+      />
     ];
 
     return (
       <div>
         <Dialog
+          titleStyle={{ color: 'red' }}
           title="Confirmation Error"
           actions={actions}
           modal={false}
