@@ -2,6 +2,7 @@ const { google } = require('googleapis');
 
 const Auth = require('./auth');
 const parseHeader = require('./helpers/parseHeader');
+const parseMessageIdsBlob = require('./helpers/parseMessageIdsBlob');
 const { addToStore, addToHashMap } = require('./helpers/addTo');
 
 const Gmail = {
@@ -22,12 +23,57 @@ const Gmail = {
     return Gmail.api.users.getProfile(params);
   },
 
-  getInitialEmails: async (access_token) => {
-    await Gmail.init({ access_token });
+  createLabel: (name) => {
+    const params = {
+      userId: 'me',
+      resource: {
+        name
+      }
+    };
 
-    const messageIds = await Gmail.getNewsletterMessageIds();
+    return Gmail.api.users.labels.create(params);
+  },
 
-    const messages = await Promise.all(messageIds.data.messages.map(Gmail.fetchMessage));
+  addToLabel: (messageIds, labelId) => {
+    const params = {
+      userId: 'me',
+      resource: {
+        ids: messageIds,
+        addLabelIds: [labelId]
+      }
+    };
+
+    return Gmail.api.users.messages.batchModify(params);
+  },
+
+  getMessageIds: (q) => {
+    const params = {
+      userId: 'me',
+      q
+    };
+
+    return Gmail.api.users.messages.list(params);
+  },
+
+  getMessage: (messageId) => {
+    const params = {
+      userId: 'me',
+      id: messageId
+    };
+
+    return Gmail.api.users.messages.get(params);
+  },
+
+  getInitialEmails: async (access_token, next, q = 'newsletter') => {
+    if (access_token) {
+      await Gmail.init({ access_token });
+    }
+
+    const messageIds = await Gmail.getMessageIds(q).catch(Gmail.handleError(next));
+
+    const messages = await Promise.all(messageIds.data.messages.map(Gmail.fetchMessage)).catch(
+      Gmail.handleError(next)
+    );
 
     messages.map(parseHeader).forEach(addToHashMap(Gmail.newsletterHashMap));
 
@@ -38,24 +84,34 @@ const Gmail = {
     return newsletterStore;
   },
 
-  getNewsletterMessageIds: async () => {
-    const params = {
-      userId: 'me',
-      q: 'newsletter'
-    };
-
-    return Gmail.api.users.messages.list(params);
-  },
-
   fetchMessage: ({ id }) => Gmail.getMessage(id),
 
-  getMessage: async (messageId) => {
-    const params = {
-      userId: 'me',
-      id: messageId
-    };
+  addNewslettersToLabel: async (access_token, emails, next) => {
+    await Gmail.init({ access_token });
 
-    return Gmail.api.users.messages.get(params);
+    const messageIdsBlob = await Promise.all(emails.map(Gmail.getMessageIds)).catch(
+      Gmail.handleError(next)
+    );
+
+    const messageIds = parseMessageIdsBlob(messageIdsBlob);
+
+    const labelResource = await Gmail.createLabel('test-v10').catch(Gmail.handleError(next));
+
+    const labelId = labelResource.data.id,
+      labelName = labelResource.data.name,
+      labelNameQuery = `label:${labelName}`;
+
+    await Gmail.addToLabel(messageIds, labelId).catch(Gmail.handleError(next));
+
+    return Gmail.getInitialEmails(null, null, labelNameQuery).catch(Gmail.handleError(next));
+  },
+
+  handleError: (next) => (err) => {
+    const errorMessage = err.errors[0].message;
+
+    next(errorMessage);
+
+    throw new Error(`${errorMessage}`);
   }
 };
 

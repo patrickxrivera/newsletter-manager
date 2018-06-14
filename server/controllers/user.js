@@ -26,7 +26,7 @@ const getInitialEmails = async (req, res, next) => {
 
   if (!updatedTokens) return;
 
-  const newsletters = await Gmail.getInitialEmails(updatedTokens);
+  const newsletters = await Gmail.getInitialEmails(updatedTokens, next);
 
   res.send(newsletters);
 };

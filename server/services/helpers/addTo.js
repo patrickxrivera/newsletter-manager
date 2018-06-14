@@ -20,7 +20,8 @@ const extractEmail = (value) => {
 
 const isInvalid = (email) => !email || isPersonal(email);
 
-const isPersonal = (email) => email.includes('@gmail.com') || email.includes('.edu');
+const isPersonal = (email) =>
+  email.includes('@gmail.com') || email.includes('.edu') || email.includes('google');
 
 const addToStore = (store) => (emailAddress, accountName) =>
   store.push({ accountName, emailAddress });
