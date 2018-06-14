@@ -13,6 +13,7 @@ const authenticate = async (req, res) => {
 const redirect = async (req, res, next) => {
   const tokens = await Auth.getCredentials(req);
   const { data } = await Gmail.getProfile(tokens);
+
   const [id] = await query.createUser(tokens, data).catch(next);
 
   if (!id) return;
@@ -20,12 +21,12 @@ const redirect = async (req, res, next) => {
   res.redirect(keys.frontendRedirect + queryString.stringify({ ...id }));
 };
 
-const getMessages = async (req, res, next) => {
+const getInitialEmails = async (req, res, next) => {
   const updatedTokens = await Auth.updateTokens(req, next);
 
   if (!updatedTokens) return;
 
-  const newsletters = await Gmail.getNewsletterMessages(updatedTokens);
+  const newsletters = await Gmail.getInitialEmails(updatedTokens);
 
   res.send(newsletters);
 };
@@ -33,5 +34,5 @@ const getMessages = async (req, res, next) => {
 module.exports = {
   authenticate,
   redirect,
-  getMessages
+  getInitialEmails
 };

@@ -22,7 +22,7 @@ const Gmail = {
     return Gmail.api.users.getProfile(params);
   },
 
-  getNewsletterMessages: async (access_token) => {
+  getInitialEmails: async (access_token) => {
     await Gmail.init({ access_token });
 
     const messageIds = await Gmail.getNewsletterMessageIds();
