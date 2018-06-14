@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { isEmpty } from 'ramda';
 
 import Settings from './Settings';
+import { addNewslettersToLabel } from '../../../actions/labels/unsaved';
+import { getAdditionalNewsletters, getEmailAddresses } from '../../../reducers/labels/unsaved';
 
 class SettingsContainer extends Component {
   state = {
@@ -14,7 +17,6 @@ class SettingsContainer extends Component {
   };
 
   handleFormSubmit = ({ name }) => {
-    console.log(name);
     if (this.isUndefined(name)) {
       this.setState({ isInputError: true });
       return;
@@ -22,7 +24,20 @@ class SettingsContainer extends Component {
 
     this.checkboxesAreEmpty()
       ? this.setState({ isCheckboxError: true })
-      : console.log('submit form!');
+      : this.handleAddNewslettersToLabel(name);
+  };
+
+  handleAddNewslettersToLabel = (name) => {
+    const { checkboxOne, checkboxTwo } = this.state;
+    const { additionalNewsletters, emailAddresses, addNewslettersToLabel } = this.props;
+
+    addNewslettersToLabel({
+      name,
+      additionalNewsletters,
+      emailAddresses,
+      checkboxOne,
+      checkboxTwo
+    });
   };
 
   isUndefined = (val) => val === undefined;
@@ -57,7 +72,14 @@ class SettingsContainer extends Component {
   }
 }
 
-export default reduxForm({
-  form: 'setitngs',
-  fields: ['name']
-})(SettingsContainer);
+const mapStateToProps = (state) => ({
+  emailAddresses: getEmailAddresses(state),
+  additionalNewsletters: getAdditionalNewsletters(state)
+});
+
+export default connect(mapStateToProps, { addNewslettersToLabel })(
+  reduxForm({
+    form: 'setitngs',
+    fields: ['name']
+  })(SettingsContainer)
+);

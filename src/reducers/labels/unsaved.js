@@ -34,3 +34,6 @@ const deleteNewsletter = (selected) => (curr) => curr !== selected;
 export const getInitialEmails = ({ unsavedLabels }) => unsavedLabels.emails;
 
 export const getAdditionalNewsletters = ({ unsavedLabels }) => unsavedLabels.additionalNewsletters;
+
+export const getEmailAddresses = ({ unsavedLabels }) =>
+  unsavedLabels.emails.map(({ emailAddress }) => emailAddress);
