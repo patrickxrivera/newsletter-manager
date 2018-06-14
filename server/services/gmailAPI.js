@@ -1,9 +1,12 @@
 const { google } = require('googleapis');
+const { isEmpty } = require('ramda');
 
 const Auth = require('./auth');
 const parseHeader = require('./helpers/parseHeader');
 const parseMessageIdsBlob = require('./helpers/parseMessageIdsBlob');
 const { addToStore, addToHashMap } = require('./helpers/addTo');
+
+const noMessageIds = (messageIds) => !messageIds.length;
 
 const Gmail = {
   api: {},
@@ -86,28 +89,35 @@ const Gmail = {
 
   fetchMessage: ({ id }) => Gmail.getMessage(id),
 
-  addNewslettersToLabel: async (access_token, emails, next) => {
+  addNewslettersToLabel: async (access_token, queries, labelName, next) => {
     await Gmail.init({ access_token });
 
-    const messageIdsBlob = await Promise.all(emails.map(Gmail.getMessageIds)).catch(
+    const messageIdsBlob = await Promise.all(queries.map(Gmail.getMessageIds)).catch(
       Gmail.handleError(next)
     );
 
     const messageIds = parseMessageIdsBlob(messageIdsBlob);
 
-    const labelResource = await Gmail.createLabel('test-v10').catch(Gmail.handleError(next));
+    if (noMessageIds(messageIds)) {
+      Gmail.handleError(next)('Invalid query.');
+    }
 
-    const labelId = labelResource.data.id,
-      labelName = labelResource.data.name,
-      labelNameQuery = `label:${labelName}`;
+    const labelResource = await Gmail.createLabel(labelName).catch(Gmail.handleError(next));
 
-    await Gmail.addToLabel(messageIds, labelId).catch(Gmail.handleError(next));
+    const { id, name } = labelResource.data,
+      labelNameQuery = `label:${name}`;
 
-    return Gmail.getInitialEmails(null, null, labelNameQuery).catch(Gmail.handleError(next));
+    await Gmail.addToLabel(messageIds, id).catch(Gmail.handleError(next));
+
+    const addedNewsletters = await Gmail.getInitialEmails(null, null, labelNameQuery).catch(
+      Gmail.handleError(next)
+    );
+
+    return { labelName, addedNewsletters };
   },
 
   handleError: (next) => (err) => {
-    const errorMessage = err.errors[0].message;
+    const errorMessage = err.errors ? err.errors[0].message : err;
 
     next(errorMessage);
 

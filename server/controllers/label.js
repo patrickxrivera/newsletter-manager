@@ -13,13 +13,15 @@ const emails = [
 ];
 
 const addNewslettersToLabel = async (req, res, next) => {
+  const { labelName, queries } = req.body;
+
   const updatedTokens = await Auth.updateTokens(req, next);
 
   if (!updatedTokens) return;
 
-  const addedNewsletters = await Gmail.addNewslettersToLabel(updatedTokens, emails, next);
+  const labelData = await Gmail.addNewslettersToLabel(updatedTokens, queries, labelName, next);
 
-  res.send(addedNewsletters);
+  res.send(labelData);
 };
 
 module.exports = {
