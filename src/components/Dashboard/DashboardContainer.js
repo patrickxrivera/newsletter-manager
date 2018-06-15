@@ -8,6 +8,10 @@ import { getId } from '../../reducers/auth';
 import { getInitialEmails } from '../../reducers/labels/unsaved';
 
 class DashboardContainer extends Component {
+  state = {
+    loadingMsg: 'One moment, our robots are searching for your newsletters now.'
+  };
+
   componentDidMount() {
     const { id, emails, fetchInitialEmails } = this.props;
 
@@ -17,7 +21,7 @@ class DashboardContainer extends Component {
   }
 
   render() {
-    return <Dashboard {...this.props} />;
+    return <Dashboard {...this.props} {...this.state} />;
   }
 }
 

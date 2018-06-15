@@ -3,10 +3,10 @@ import ReactLoading from 'react-loading';
 
 import { Wrapper, LoadingWrapper, Text } from './LoadingStyles';
 
-const Loading = () => (
+const Loading = ({ loadingMsg }) => (
   <Wrapper>
     <LoadingWrapper>
-      <Text>One moment, our robots are searching for your newsletters now.</Text>
+      <Text>{loadingMsg}</Text>
       <ReactLoading
         delay={0}
         type={'bubbles'}

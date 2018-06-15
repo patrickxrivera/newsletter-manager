@@ -18,6 +18,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
+import * as Style from '../Form/Settings/SettingsStyles';
+
 const columnData = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Account Name' },
   { id: 'fat', numeric: true, disablePadding: false, label: 'Email Address' }
@@ -101,51 +103,51 @@ const toolbarStyles = (theme) => ({
   }
 });
 
-let EnhancedTableToolbar = (props) => {
-  const { numSelected, classes } = props;
-
-  return (
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0
-      })}>
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography
-            style={{
-              borderBottom: '2px solid #f5f7f9',
-              paddingBottom: '10px',
-              width: '580px'
+let EnhancedTableToolbar = ({ btnStyle, fontSize, numSelected, classes, title, ...props }) => (
+  <Toolbar
+    className={classNames(classes.root, {
+      [classes.highlight]: numSelected > 0
+    })}>
+    <div className={classes.title}>
+      {numSelected > 0 ? (
+        <Typography color="inherit" variant="subheading">
+          {numSelected} selected
+        </Typography>
+      ) : (
+        <Typography variant="title" id="tableTitle">
+          {title}
+        </Typography>
+      )}
+    </div>
+    <div className={classes.spacer} />
+    <div className={classes.actions}>
+      {numSelected > 0 ? (
+        <Tooltip title="Delete">
+          <IconButton
+            onClick={() => {
+              props.handleDeleteClick();
             }}
-            variant="title"
-            id="tableTitle">
-            Your Newsletters
-          </Typography>
-        )}
-      </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton
-              onClick={() => {
-                props.handleDeleteClick();
-              }}
-              aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          ''
-        )}
-      </div>
-    </Toolbar>
-  );
-};
+            aria-label="Delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        fontSize && (
+          <a
+            style={fontSize}
+            target="_blank"
+            href={`https://mail.google.com/mail/u/0/?tab=wm#label/${title}`}>
+            <Style.Btn type="submit" style={btnStyle} variant="raised">
+              <Style.ButtonArea>
+                <Style.Text style={fontSize}>Open in Gmail</Style.Text>
+              </Style.ButtonArea>
+            </Style.Btn>
+          </a>
+        )
+      )}
+    </div>
+  </Toolbar>
+);
 
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -220,21 +222,25 @@ class EnhancedTable extends React.Component {
   isSelected = (id) => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, emails } = this.props;
+    const { classes, emails, title, tableManagerStyle, btnStyle, fontSize } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, emails.length - page * rowsPerPage);
 
+    const tableStyle = {
+      marginTop: '0px',
+      width: '50%',
+      borderRadius: '10px',
+      ...tableManagerStyle
+    };
+
     return (
-      <Paper
-        style={{
-          marginTop: '0px',
-          width: '50%',
-          borderRadius: '10px'
-        }}
-        className={classes.root}>
+      <Paper style={tableStyle} className={classes.root}>
         <EnhancedTableToolbar
+          title={title}
           handleDeleteClick={this.handleDeleteClick}
+          btnStyle={btnStyle}
           numSelected={selected.length}
+          fontSize={fontSize}
         />
         <div className={classes.tableWrapper}>
           <Table

@@ -8,9 +8,9 @@ class Redirect extends Component {
   componentDidMount() {
     const { signInUser, history } = this.props;
     const id = parseParams(window.location.search);
-
-    signInUser(id);
     console.log(id);
+    signInUser(id);
+
     history.push('/dashboard');
   }
 

@@ -19,7 +19,7 @@ const Newsletter = ({ handleSubmit, handleFormSubmit, input, ...rest }) => (
         label="Query"
         name="query"
         type="input"
-        props={rest}
+        props={{ ...rest, handleSubmit, handleFormSubmit }}
         component={renderNewsletterForm}
         {...input}
       />
@@ -27,8 +27,8 @@ const Newsletter = ({ handleSubmit, handleFormSubmit, input, ...rest }) => (
   </Style.Wrapper>
 );
 
-const renderNewsletterForm = ({ input, additionalNewsletters }) => [
-  <Style.SearchIcon key={1} />,
+const renderNewsletterForm = ({ input, additionalNewsletters, ...props }) => [
+  <Style.SearchIcon key={1} onClick={props.handleSubmit(props.handleFormSubmit)} />,
   <Style.Input key={2} placeholder="Enter newsletter" {...input} />,
   <Style.NewslettersList key={3}>
     {isEmpty(additionalNewsletters)

@@ -39,6 +39,10 @@ export const SearchIcon = styled(Search)`
   margin-left: 12px;
   margin-top: 11px;
   stroke-width: 3;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 `;
 

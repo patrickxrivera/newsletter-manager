@@ -7,15 +7,19 @@ import SettingsContainer from '../Form/Settings/SettingsContainer';
 import { Wrapper, InnerWrapper, ContentWrapper, FormWrapper } from './DashboardStyles';
 import './styles.css';
 
-const Dashboard = ({ emails, ...rest }) => (
+import { primaryButton } from '../Form/Settings/SettingsStyles';
+
+const Dashboard = ({ loadingMsg, emails, ...rest }) => (
   <Wrapper>
-    <InnerWrapper>{emails.length ? renderEnhancedTable(emails, rest) : <Loading />}</InnerWrapper>
+    <InnerWrapper>
+      {emails.length ? renderEnhancedTable(emails, rest) : <Loading loadingMsg={loadingMsg} />}
+    </InnerWrapper>
   </Wrapper>
 );
 
 const renderEnhancedTable = (emails, rest) => (
   <ContentWrapper className="fade-in">
-    <EnhancedTable emails={emails} {...rest} />
+    <EnhancedTable btnStyle={primaryButton} title={'Your Newsletters'} emails={emails} {...rest} />
     <FormWrapper>
       <NewsletterContainer />
       <SettingsContainer />

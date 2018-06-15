@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { isEmpty } from 'ramda';
 
 import Settings from './Settings';
+import { getId } from '../../../reducers/auth';
 import { addNewslettersToLabel } from '../../../actions/labels/unsaved';
 import { getAdditionalNewsletters, getEmailAddresses } from '../../../reducers/labels/unsaved';
 
@@ -31,17 +33,26 @@ class SettingsContainer extends Component {
 
   handleAddNewslettersToLabel = (labelName) => {
     const { checkboxOne, checkboxTwo } = this.state;
-    const { additionalNewsletters, emailAddresses, addNewslettersToLabel } = this.props;
+    const {
+      additionalNewsletters,
+      emailAddresses,
+      addNewslettersToLabel,
+      id,
+      history
+    } = this.props;
 
-    addNewslettersToLabel({
+    const labelData = {
+      id,
       labelName,
       additionalNewsletters,
       emailAddresses,
       checkboxOne,
       checkboxTwo
-    });
+    };
 
-    this.setState({ labelName: '' });
+    addNewslettersToLabel(labelData);
+
+    history.push('/confirm');
   };
 
   isUndefined = (val) => val === undefined;
@@ -77,6 +88,7 @@ class SettingsContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  id: getId(state),
   emailAddresses: getEmailAddresses(state),
   additionalNewsletters: getAdditionalNewsletters(state)
 });
@@ -85,5 +97,5 @@ export default connect(mapStateToProps, { addNewslettersToLabel })(
   reduxForm({
     form: 'setitngs',
     fields: ['name']
-  })(SettingsContainer)
+  })(withRouter(SettingsContainer))
 );
