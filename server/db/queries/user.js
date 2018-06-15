@@ -1,11 +1,13 @@
 const db = require('../config');
 
+const idExists = (existingId) => existingId.length !== 0;
+
 const createUser = async ({ access_token, refresh_token }, { emailAddress }) => {
   const existingId = await db('user_account')
     .select('id')
     .where('email_address', emailAddress);
 
-  if (existingId.length) return existingId;
+  if (idExists(existingId)) return existingId;
 
   return db('user_account').insert(
     {
@@ -28,6 +30,9 @@ const updateUser = ({ refresh_token, access_token }, id) => {
     .where('id', id)
     .returning('access_token');
 };
+
+const addLabelToDb = ({ labelName, queries, id }) =>
+  db('label').insert({ name: labelName, user_id: id }, 'id');
 
 module.exports = {
   createUser,

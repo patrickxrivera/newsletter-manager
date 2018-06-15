@@ -4,6 +4,7 @@ const { isEmpty } = require('ramda');
 const Auth = require('./auth');
 const parseHeader = require('./helpers/parseHeader');
 const parseMessageIdsBlob = require('./helpers/parseMessageIdsBlob');
+const handleError = require('../utils/handleError');
 const { addToStore, addToHashMap } = require('./helpers/addTo');
 
 const noMessageIds = (messageIds) => !messageIds.length;
@@ -72,10 +73,10 @@ const Gmail = {
       await Gmail.init({ access_token });
     }
 
-    const messageIds = await Gmail.getMessageIds(q).catch(Gmail.handleError(next));
+    const messageIds = await Gmail.getMessageIds(q).catch(handleError(next));
 
     const messages = await Promise.all(messageIds.data.messages.map(Gmail.fetchMessage)).catch(
-      Gmail.handleError(next)
+      handleError(next)
     );
 
     messages.map(parseHeader).forEach(addToHashMap(Gmail.newsletterHashMap));
@@ -93,35 +94,27 @@ const Gmail = {
     await Gmail.init({ access_token });
 
     const messageIdsBlob = await Promise.all(queries.map(Gmail.getMessageIds)).catch(
-      Gmail.handleError(next)
+      handleError(next)
     );
 
     const messageIds = parseMessageIdsBlob(messageIdsBlob);
 
     if (noMessageIds(messageIds)) {
-      Gmail.handleError(next)('Invalid query.');
+      handleError(next)('Invalid query.');
     }
 
-    const labelResource = await Gmail.createLabel(labelName).catch(Gmail.handleError(next));
+    const labelResource = await Gmail.createLabel(labelName).catch(handleError(next));
 
     const { id, name } = labelResource.data,
       labelNameQuery = `label:${name}`;
 
-    await Gmail.addToLabel(messageIds, id).catch(Gmail.handleError(next));
+    await Gmail.addToLabel(messageIds, id).catch(handleError(next));
 
     const addedNewsletters = await Gmail.getInitialEmails(null, null, labelNameQuery).catch(
-      Gmail.handleError(next)
+      handleError(next)
     );
 
     return { labelName, addedNewsletters };
-  },
-
-  handleError: (next) => (err) => {
-    const errorMessage = err.errors ? err.errors[0].message : err;
-
-    next(errorMessage);
-
-    throw new Error(`${errorMessage}`);
   }
 };
 

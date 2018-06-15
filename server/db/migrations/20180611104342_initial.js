@@ -7,7 +7,7 @@ exports.up = (knex, Promise) =>
       table.string('refresh_token');
     }),
 
-    knex.schema.createTable('newsletter', (table) => {
+    knex.schema.createTable('label', (table) => {
       table.increments('id').primary();
       table.string('name');
       table.integer('user_id').unsigned();
@@ -20,11 +20,10 @@ exports.up = (knex, Promise) =>
       table.string('email_address');
     }),
 
-    knex.schema.createTable('newsletter_email', (table) => {
+    knex.schema.createTable('label_email', (table) => {
       table.increments('id').primary();
-      table.integer('unread_messages');
-      table.integer('newsletter_id').unsigned();
-      table.foreign('newsletter_id').references('newsletter.id');
+      table.integer('label_id').unsigned();
+      table.foreign('label_id').references('label.id');
       table.integer('email_id').unsigned();
       table.foreign('email_id').references('email.id');
     })
@@ -32,8 +31,8 @@ exports.up = (knex, Promise) =>
 
 exports.down = (knex, Promise) =>
   Promise.all([
-    knex.schema.dropTable('newsletter_email'),
+    knex.schema.dropTable('label_email'),
     knex.schema.dropTable('email'),
-    knex.schema.dropTable('newsletter'),
+    knex.schema.dropTable('label'),
     knex.schema.dropTable('user_account')
   ]);

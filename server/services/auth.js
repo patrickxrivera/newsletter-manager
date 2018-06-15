@@ -2,6 +2,7 @@ const { google } = require('googleapis');
 
 const keys = require('../keys');
 const query = require('../db/queries');
+const handleError = require('../utils/handleError');
 
 const Auth = {
   oAuth2Client: new google.auth.OAuth2(keys.clientId, keys.clientSecret, keys.redirectURI),
@@ -10,7 +11,7 @@ const Auth = {
 
   getCredentials: async (req) => {
     const { tokens } = await Auth.oAuth2Client.getToken(req.query.code);
-
+    console.log(tokens);
     return tokens;
   },
 
@@ -38,9 +39,7 @@ const Auth = {
   updateTokens: async (req, next) => {
     const { id } = req.body;
 
-    const [token] = await query.getRefreshToken(id).catch(next);
-
-    if (!token) return;
+    const [token] = await query.getRefreshToken(id).catch(handleError(next));
 
     const { credentials } = await Auth.refreshAccessToken(token).catch(next);
 

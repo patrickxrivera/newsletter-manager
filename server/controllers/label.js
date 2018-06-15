@@ -1,6 +1,7 @@
 const Auth = require('../services/auth');
 const Gmail = require('../services/gmailAPI');
 const code = require('../utils/statusCodes');
+const query = require('../db/queries');
 
 const emails = [
   'kale@hackernewsletter.com',
@@ -13,7 +14,7 @@ const emails = [
 ];
 
 const addNewslettersToLabel = async (req, res, next) => {
-  const { labelName, queries } = req.body;
+  const { labelName, queries, id } = req.body;
 
   const updatedTokens = await Auth.updateTokens(req, next);
 
@@ -22,6 +23,10 @@ const addNewslettersToLabel = async (req, res, next) => {
   const labelData = await Gmail.addNewslettersToLabel(updatedTokens, queries, labelName, next);
 
   res.send(labelData);
+
+  const dbRes = await query.addLabelToDb(req.body);
+
+  console.log(dbRes);
 };
 
 module.exports = {
