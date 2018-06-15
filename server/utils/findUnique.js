@@ -1,1 +1,2 @@
-module.exports = (hashSet) => ({ email }) => (hashSet.has(email) ? false : hashSet.add(email));
+module.exports = (hashSet) => ({ emailAddress }) =>
+  hashSet.has(emailAddress) ? false : hashSet.add(emailAddress);

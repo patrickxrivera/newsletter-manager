@@ -22,9 +22,7 @@ const redirect = async (req, res, next) => {
 };
 
 const getInitialEmails = async (req, res, next) => {
-  const [accessToken] = await query.getAccessToken(req.body.id).catch(handleError(next));
-
-  const newsletters = await Gmail.getInitialEmails(accessToken, next);
+  const newsletters = await Gmail.getNewsletters(next);
 
   res.send(newsletters);
 };

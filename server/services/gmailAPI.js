@@ -68,17 +68,16 @@ const Gmail = {
     return Gmail.api.users.messages.get(params);
   },
 
-  getInitialEmails: async (accessToken, next, q = 'newsletter') => {
-    if (accessToken) {
-      await Gmail.init(accessToken);
-    }
+  getNewsletters: async (next, q = 'newsletter') => {
+    Gmail._resetNewsletterHashMap();
 
     const messageIds = await Gmail.getMessageIds(q).catch(handleError(next));
 
     const messages = await Promise.all(messageIds.data.messages.map(Gmail.fetchMessage)).catch(
       handleError(next)
     );
-
+    // TODO: use reduce to return hash map instead of creating an instance variable
+    // TODO cont: this ensures the value is reset on each call of getInitialEmails
     messages.map(parseHeader).forEach(addToHashMap(Gmail.newsletterHashMap));
 
     let newsletterStore = [];
@@ -110,11 +109,16 @@ const Gmail = {
 
     await Gmail.addToLabel(messageIds, id).catch(handleError(next));
 
-    const addedNewsletters = await Gmail.getInitialEmails(null, null, labelNameQuery).catch(
+    const addedNewsletters = await Gmail.getNewsletters(next, labelNameQuery).catch(
       handleError(next)
     );
 
     return { labelName, addedNewsletters };
+  },
+
+  _resetNewsletterHashMap: () => {
+    // TODO: remove this based on above comments
+    Gmail.newsletterHashMap = new Map();
   }
 };
 

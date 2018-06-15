@@ -4,7 +4,11 @@ const findUnique = require('../../utils/findUnique');
 
 const addLabel = ({ labelName, id }) => db('label').insert({ name: labelName, user_id: id }, 'id');
 
-const addEmails = ({ addedNewsletters }) => Promise.all(addedNewsletters.map(addEmail));
+const addEmails = ({ addedNewsletters }) => {
+  const uniqueNewsletters = addedNewsletters.filter(findUnique(new Set()));
+
+  return Promise.all(uniqueNewsletters.map(addEmail));
+};
 
 const addEmail = async ({ accountName, emailAddress }) => {
   const emailExists = await db('email')
@@ -21,7 +25,7 @@ const addEmail = async ({ accountName, emailAddress }) => {
 const addLabelEmails = ({ addedNewsletters, labelId }) => {
   const uniqueNewsletters = addedNewsletters.filter(findUnique(new Set()));
 
-  return Promise.all(addedNewsletters.map(addLabelEmail(labelId)));
+  return Promise.all(uniqueNewsletters.map(addLabelEmail(labelId)));
 };
 
 const addLabelEmail = (labelId) => ({ emailAddress }) =>
