@@ -6,6 +6,7 @@ import NavContainer from '../Nav/NavContainer';
 import Home from '../Home/Home';
 import DashboardContainer from '../Dashboard/DashboardContainer';
 import ConfirmContainer from '../Confirm/ConfirmContainer';
+import LabelsContainer from '../Labels/LabelsContainer';
 import Redirect from '../Redirect/Redirect';
 import RequireAuth from '../RequireAuth/RequireAuth';
 import { Wrapper, theme } from './AppStyles';
@@ -19,6 +20,7 @@ const App = () => (
           <Route exact path="/" component={Home} />
           <Route path="/dashboard" component={RequireAuth(DashboardContainer)} />
           <Route path="/confirm" component={RequireAuth(ConfirmContainer)} />
+          <Route path="/labels" component={RequireAuth(LabelsContainer)} />
           <Route path="/redirect" component={Redirect} />
         </Switch>
       </Wrapper>

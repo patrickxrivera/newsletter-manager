@@ -22,4 +22,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: getIsAuthenticated(state)
 });
 
-export default connect(mapStateToProps, { signOutUser })(withRouter(NavContainer));
+export default withRouter(connect(mapStateToProps, { signOutUser })(NavContainer));
