@@ -11,7 +11,7 @@ const Auth = {
 
   getCredentials: async (req) => {
     const { tokens } = await Auth.oAuth2Client.getToken(req.query.code);
-    console.log(tokens);
+
     return tokens;
   },
 

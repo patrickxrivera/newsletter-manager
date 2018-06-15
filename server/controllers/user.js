@@ -4,6 +4,7 @@ const query = require('../db/queries');
 const keys = require('../keys');
 const Auth = require('../services/auth');
 const Gmail = require('../services/gmailAPI');
+const handleError = require('../utils/handleError');
 
 const authenticate = async (req, res) => {
   const authURL = Auth.getAuthURL();
@@ -17,7 +18,7 @@ const redirect = async (req, res, next) => {
 
   const [id] = await query.createUser(tokens, data).catch(handleError(next));
 
-  res.redirect(keys.frontendRedirect + queryString.stringify({ id }));
+  res.redirect(keys.frontendRedirect + queryString.stringify(id));
 };
 
 const getInitialEmails = async (req, res, next) => {

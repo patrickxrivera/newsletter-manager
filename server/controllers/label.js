@@ -2,31 +2,27 @@ const Auth = require('../services/auth');
 const Gmail = require('../services/gmailAPI');
 const code = require('../utils/statusCodes');
 const query = require('../db/queries');
-
-const emails = [
-  'kale@hackernewsletter.com',
-  'membership@stratechery.com',
-  'tyler@tylermcginnis.com',
-  'hello@digest.producthunt.com',
-  'First Round Review',
-  'Social Capital',
-  'Angel List'
-];
+const handleError = require('../utils/handleError');
 
 const addNewslettersToLabel = async (req, res, next) => {
   const { labelName, queries, id } = req.body;
 
-  const updatedTokens = await Auth.updateTokens(req, next);
+  const updatedTokens = await Auth.updateTokens(req, next).catch(handleError(next));
 
-  if (!updatedTokens) return;
+  const labelData = await Gmail.addNewslettersToLabel(
+    updatedTokens,
+    queries,
+    labelName,
+    next
+  ).catch(handleError(next));
 
-  const labelData = await Gmail.addNewslettersToLabel(updatedTokens, queries, labelName, next);
+  const [labelId] = await query.addLabel(req.body).catch(handleError(next));
 
-  res.send(labelData);
+  res.send({ ...labelData, labelId });
 
-  const dbRes = await query.addLabelToDb(req.body);
+  await query.addEmails(labelData).catch(handleError(next));
 
-  console.log(dbRes);
+  await query.addLabelEmails({ ...labelData, labelId }).catch(handleError(next));
 };
 
 module.exports = {

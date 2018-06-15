@@ -2,7 +2,7 @@ exports.up = (knex, Promise) =>
   Promise.all([
     knex.schema.createTable('user_account', (table) => {
       table.increments('id').primary();
-      table.string('email_address').unique();
+      table.text('email_address').unique();
       table.string('access_token');
       table.string('refresh_token');
     }),
@@ -15,17 +15,16 @@ exports.up = (knex, Promise) =>
     }),
 
     knex.schema.createTable('email', (table) => {
-      table.increments('id').primary();
+      table.text('email_address').primary();
       table.string('account_name');
-      table.string('email_address');
     }),
 
     knex.schema.createTable('label_email', (table) => {
       table.increments('id').primary();
       table.integer('label_id').unsigned();
       table.foreign('label_id').references('label.id');
-      table.integer('email_id').unsigned();
-      table.foreign('email_id').references('email.id');
+      table.text('email_address');
+      table.foreign('email_address').references('email.email_address');
     })
   ]);
 
