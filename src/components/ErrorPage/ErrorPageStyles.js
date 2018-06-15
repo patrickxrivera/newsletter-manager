@@ -23,3 +23,11 @@ export const Text = styled.div`
   text-align: center;
   margin-bottom: 2rem;
 `;
+
+export const errorPageButton = {
+  color: '#fff',
+  backgroundColor: '#34a853',
+  height: '50px',
+  width: '200px',
+  marginTop: '1rem'
+};
