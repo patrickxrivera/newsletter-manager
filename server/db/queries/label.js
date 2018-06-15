@@ -10,7 +10,7 @@ const addEmail = async ({ accountName, emailAddress }) => {
   const emailExists = await db('email')
     .select('email_address')
     .where('email_address', emailAddress);
-  console.log(emailExists);
+
   if (itemExists(emailExists)) return;
 
   return db('email')
@@ -18,16 +18,14 @@ const addEmail = async ({ accountName, emailAddress }) => {
     .returning('email_address');
 };
 
-const addLabelEmails = async ({ addedNewsletters, labelId }) => {
+const addLabelEmails = ({ addedNewsletters, labelId }) => {
   const uniqueNewsletters = addedNewsletters.filter(findUnique(new Set()));
 
   return Promise.all(addedNewsletters.map(addLabelEmail(labelId)));
 };
 
-const addLabelEmail = (labelId) => async ({ emailAddress }) => {
-  console.log({ labelId, emailAddress });
-  return db('label_email').insert({ email_address: emailAddress, label_id: labelId });
-};
+const addLabelEmail = (labelId) => ({ emailAddress }) =>
+  db('label_email').insert({ email_address: emailAddress, label_id: labelId });
 
 module.exports = {
   addLabel,

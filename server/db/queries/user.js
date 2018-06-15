@@ -1,27 +1,27 @@
 const db = require('../config');
 const itemExists = require('../../utils/exists');
 
-const createUser = async ({ access_token, refresh_token }, { emailAddress }) => {
+const handleCreateUser = async ({ access_token, refresh_token }, { emailAddress }) => {
   const existingId = await db('user_account')
     .select('id')
     .where('email_address', emailAddress);
 
-  if (itemExists(existingId)) return existingId;
+  return itemExists(existingId)
+    ? updateUserAccessToken(access_token)
+    : createUser(access_token, refresh_token, emailAddress);
+};
 
-  return db('user_account').insert(
+const updateUserAccessToken = (access_token) => db('user_account').update({ access_token }, 'id');
+
+const createUser = (access_token, refresh_token, email_address) =>
+  db('user_account').insert(
     {
       access_token,
       refresh_token,
-      email_address: emailAddress
+      email_address
     },
     'id'
   );
-};
-
-const getRefreshToken = (id) =>
-  db('user_account')
-    .select('refresh_token')
-    .where('id', id);
 
 const updateUser = ({ refresh_token, access_token }, id) => {
   return db('user_account')
@@ -30,8 +30,18 @@ const updateUser = ({ refresh_token, access_token }, id) => {
     .returning('access_token');
 };
 
+const getToken = (tokenType) => (id) =>
+  db('user_account')
+    .select(tokenType)
+    .where('id', id);
+
+const getRefreshToken = getToken('refresh_token');
+
+const getAccessToken = getToken('access_token');
+
 module.exports = {
-  createUser,
+  handleCreateUser,
+  updateUser,
   getRefreshToken,
-  updateUser
+  getAccessToken
 };

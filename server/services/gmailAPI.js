@@ -68,9 +68,9 @@ const Gmail = {
     return Gmail.api.users.messages.get(params);
   },
 
-  getInitialEmails: async (access_token, next, q = 'newsletter') => {
-    if (access_token) {
-      await Gmail.init({ access_token });
+  getInitialEmails: async (accessToken, next, q = 'newsletter') => {
+    if (accessToken) {
+      await Gmail.init(accessToken);
     }
 
     const messageIds = await Gmail.getMessageIds(q).catch(handleError(next));

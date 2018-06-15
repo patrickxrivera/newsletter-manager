@@ -16,15 +16,15 @@ const redirect = async (req, res, next) => {
 
   const { data } = await Gmail.getProfile(tokens);
 
-  const [id] = await query.createUser(tokens, data).catch(handleError(next));
+  const id = await query.handleCreateUser(tokens, data).catch(handleError(next));
 
-  res.redirect(keys.frontendRedirect + queryString.stringify(id));
+  res.redirect(keys.frontendRedirect + queryString.stringify({ id }));
 };
 
 const getInitialEmails = async (req, res, next) => {
-  const updatedTokens = await Auth.updateTokens(req, next).catch(handleError(next));
+  const [accessToken] = await query.getAccessToken(req.body.id).catch(handleError(next));
 
-  const newsletters = await Gmail.getInitialEmails(updatedTokens, next);
+  const newsletters = await Gmail.getInitialEmails(accessToken, next);
 
   res.send(newsletters);
 };
