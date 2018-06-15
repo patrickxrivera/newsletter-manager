@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 const initialState = {
-  emails: [],
+  emails: null,
   additionalNewsletters: []
 };
 

@@ -8,7 +8,7 @@ const LandingPage = () => (
   <Style.Wrapper>
     <Style.BackgroundImg src="https://source.unsplash.com/tg1Z_ljKwKk/1600x900" />
     <Style.HeadlineWrapper>
-      <Style.Headline>Add a label to all your newsletters in Gmail.</Style.Headline>
+      <Style.Headline>Label your newsletters in Gmail.</Style.Headline>
       <Style.Description>More time reading. Less time searching.</Style.Description>
       <Style.Link href={endpoint.signIn}>
         <Style.Btn style={Style.primaryButton} variant="raised">

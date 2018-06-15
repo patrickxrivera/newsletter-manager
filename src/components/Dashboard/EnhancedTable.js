@@ -178,16 +178,14 @@ class EnhancedTable extends React.Component {
   };
 
   handleDeleteClick = () => {
-    this.handleSelectAllClick();
     this.props.deleteEmails(this.state.selected);
   };
 
   handleSelectAllClick = (event, checked) => {
-    if (checked) {
-      this.setState({ selected: this.props.emails.map((e) => e.accountName) });
-      return;
-    }
-    this.setState({ selected: [] });
+    console.log({ checked });
+    checked
+      ? this.setState({ selected: this.props.emails.map((e) => e.accountName) })
+      : this.setState({ selected: [] });
   };
 
   handleClick = (event, id) => {

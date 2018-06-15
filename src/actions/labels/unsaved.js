@@ -11,14 +11,11 @@ export const addNewslettersToLabel = (labelData) => async (dispatch) => {
   const queries = [...emailAddresses, ...additionalNewsletters].map((q) => `from:${q}`);
 
   const { data, error } = await api.addNewslettersToLabelSent(id, labelName, queries);
-  console.log(data);
+
   if (!error) {
     dispatch(D.addNewslettersToLabelSuccess(data));
     return;
   }
-
-  // dispatch(D.addNewslettersToLabelError(error));
-  // dispatch(D.sendConfirmationError(error));
 };
 
 export const fetchInitialEmails = (id) => async (dispatch) => {
