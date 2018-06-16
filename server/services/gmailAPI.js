@@ -113,7 +113,7 @@ const Gmail = {
       handleError(next)
     );
 
-    return { labelName, addedNewsletters };
+    return { labelName, addedNewsletters, labelId: id };
   },
 
   _resetNewsletterHashMap: () => {

@@ -16,13 +16,9 @@ const addNewslettersToLabel = async (req, res, next) => {
     next
   ).catch(handleError(next));
 
-  const [labelId] = await query.addLabel(req.body).catch(handleError(next));
+  res.send(labelData);
 
-  res.send({ ...labelData, labelId });
-
-  await query.addEmails(labelData).catch(handleError(next));
-
-  await query.addLabelEmails({ ...labelData, labelId }).catch(handleError(next));
+  query.addNewslettersToLabel(req, labelData, next);
 };
 
 module.exports = {
