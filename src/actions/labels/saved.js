@@ -6,3 +6,11 @@ export const deleteLabel = (userId, labelId) => async (dispatch) => {
 
   await api.deleteLabelSent(userId, labelId);
 };
+
+export const fetchSavedLabels = (userId, cb) => async (dispatch) => {
+  const savedLabels = await api.fetchSavedLabelsSent(userId);
+
+  dispatch(D.fetchSavedLabelsSuccess(savedLabels.data));
+
+  cb();
+};

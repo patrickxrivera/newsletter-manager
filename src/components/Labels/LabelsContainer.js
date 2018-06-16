@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Labels from './Labels';
-import { getId } from '../../reducers/auth';
-import { deleteLabel } from '../../actions/labels/saved';
+import { handleInitialRender } from '../../actions/auth';
+import { getId, getIsInitialRender } from '../../reducers/auth';
+import { deleteLabel, fetchSavedLabels } from '../../actions/labels/saved';
 import { getSavedLabels } from '../../reducers/labels/saved';
 
 class LabelsContainer extends Component {
@@ -13,6 +14,16 @@ class LabelsContainer extends Component {
     selectedLabelId: null,
     errorMsg: `No labels created yet. Get started below!`
   };
+
+  componentDidMount() {
+    const { isInitialRender, fetchSavedLabels, userId, handleInitialRender } = this.props;
+
+    if (isInitialRender) {
+      fetchSavedLabels(userId, () => {
+        handleInitialRender();
+      });
+    }
+  }
 
   handleOpen = (selectedLabelName, selectedLabelId) => () => {
     this.setState({ openDialog: true, selectedLabelName, selectedLabelId });
@@ -36,7 +47,10 @@ class LabelsContainer extends Component {
 
 const mapStateToProps = (state) => ({
   userId: getId(state),
-  savedLabels: getSavedLabels(state)
+  savedLabels: getSavedLabels(state),
+  isInitialRender: getIsInitialRender(state)
 });
 
-export default connect(mapStateToProps, { deleteLabel })(LabelsContainer);
+export default connect(mapStateToProps, { deleteLabel, fetchSavedLabels, handleInitialRender })(
+  LabelsContainer
+);

@@ -1,6 +1,8 @@
 import { handleActions } from 'redux-actions';
 
-const initialState = {};
+const initialState = {
+  isInitialRender: true
+};
 
 export default handleActions(
   {
@@ -8,6 +10,10 @@ export default handleActions(
       ...state,
       ...action.payload,
       isAuthenticated: true
+    }),
+    HANDLE_INITIAL_RENDER: (state, action) => ({
+      ...state,
+      isInitialRender: false
     })
   },
   initialState
@@ -16,3 +22,5 @@ export default handleActions(
 export const getIsAuthenticated = ({ auth }) => auth.isAuthenticated;
 
 export const getId = ({ auth }) => auth.id;
+
+export const getIsInitialRender = ({ auth }) => auth.isInitialRender;

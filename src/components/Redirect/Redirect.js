@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 
 import parseParams from './helpers/parseParams';
 import { signInUser } from '../../actions/auth';
-import { getCurrentLabel } from '../../reducers/labels/saved';
+import { getSavedLabels } from '../../reducers/labels/saved';
 
 class Redirect extends Component {
   componentDidMount() {
-    const { signInUser, history, currentLabel } = this.props;
+    const { signInUser, history, savedLabels } = this.props;
     const id = parseParams(window.location.search);
 
     signInUser(id);
 
-    currentLabel !== null ? history.push('/labels') : history.push('/dashboard');
+    savedLabels !== null ? history.push('/labels') : history.push('/dashboard');
   }
 
   render() {
@@ -21,7 +21,7 @@ class Redirect extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentLabel: getCurrentLabel(state)
+  savedLabels: getSavedLabels(state)
 });
 
 export default connect(mapStateToProps, { signInUser })(Redirect);

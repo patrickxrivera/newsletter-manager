@@ -29,3 +29,8 @@ export const resetUnsavedLabel = () => ({
   additionalNewsletters: [],
   emails: []
 });
+
+export const fetchSavedLabelsSuccess = (savedLabels) => ({
+  type: 'FETCH_SAVED_LABELS',
+  savedLabels
+});
