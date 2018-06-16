@@ -3,10 +3,10 @@ const itemExists = require('../../utils/exists');
 const findUnique = require('../../utils/findUnique');
 const handleError = require('../../utils/handleError');
 
-const addNewslettersToLabel = async (req, labelData, next) => {
-  await addLabel(req.body, labelData).catch(handleError(next));
-  await addEmails(labelData).catch(handleError(next));
-  await addLabelEmails(labelData).catch(handleError(next));
+const addNewslettersToLabel = async (req, labelData) => {
+  await addLabel(req.body, labelData);
+  await addEmails(labelData);
+  await addLabelEmails(labelData);
 };
 
 const addLabel = (user, { labelId }) =>
@@ -36,15 +36,24 @@ const addLabelEmails = ({ addedNewsletters, labelId }) => {
   return Promise.all(uniqueNewsletters.map(addLabelEmail(labelId)));
 };
 
-const addLabelEmail = (labelId) => ({ emailAddress }) => {
-  console.log({ labelId, emailAddress });
+const addLabelEmail = (labelId) => ({ emailAddress }) =>
+  db('label_email').insert({ email_address: emailAddress, label_id: labelId });
 
-  return db('label_email').insert({ email_address: emailAddress, label_id: labelId });
+const deleteLabel = async (userId, labelId) => {
+  await db('label_email')
+    .where({ label_id: labelId })
+    .del();
+
+  // TODO: update once label PK is changed to composite PK
+  return db('label')
+    .where({ id: labelId, user_id: userId })
+    .del();
 };
 
 module.exports = {
   addLabel,
   addEmails,
   addLabelEmails,
-  addNewslettersToLabel
+  addNewslettersToLabel,
+  deleteLabel
 };

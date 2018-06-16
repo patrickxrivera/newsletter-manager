@@ -9,5 +9,8 @@ module.exports = (app) => {
   app.get('/api/authorize', UserController.authenticate);
   app.get('/auth/google/callback?*', UserController.redirect);
   app.post('/api/emails', UserController.getInitialEmails);
+
+  // Label
   app.post('/api/label/create', LabelController.addNewslettersToLabel);
+  app.delete('/api/label', LabelController.deleteLabel);
 };

@@ -41,11 +41,7 @@ const Auth = {
 
     const [token] = await query.getRefreshToken(id).catch(handleError(next));
 
-    const { credentials } = await Auth.refreshAccessToken(token).catch(next);
-
-    if (!credentials) return;
-
-    return query.updateUser(credentials, id).catch(next);
+    return Auth.refreshAccessToken(token).catch(next);
   }
 };
 

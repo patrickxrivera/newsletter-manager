@@ -89,7 +89,7 @@ const Gmail = {
 
   fetchMessage: ({ id }) => Gmail.getMessage(id),
 
-  addNewslettersToLabel: async (access_token, queries, labelName, next) => {
+  addNewslettersToLabel: async ({ access_token }, queries, labelName, next) => {
     await Gmail.init({ access_token });
 
     const messageIdsBlob = await Promise.all(queries.map(Gmail.getMessageIds)).catch(
@@ -114,6 +114,17 @@ const Gmail = {
     );
 
     return { labelName, addedNewsletters, labelId: id };
+  },
+
+  deleteLabel: async ({ access_token }, labelId) => {
+    await Gmail.init({ access_token });
+
+    const params = {
+      userId: 'me',
+      id: labelId
+    };
+
+    return Gmail.api.users.labels.delete(params);
   },
 
   _resetNewsletterHashMap: () => {
