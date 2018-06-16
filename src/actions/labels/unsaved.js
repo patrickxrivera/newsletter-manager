@@ -5,7 +5,6 @@ import * as D from '../../utils/dispatchHelpers';
 
 export const addNewslettersToLabel = (labelData) => async (dispatch) => {
   dispatch(D.resetCurrentLabel());
-  dispatch(D.resetAdditionalNewsletters());
 
   const { id, labelName, emailAddresses, additionalNewsletters } = labelData;
 
@@ -15,6 +14,7 @@ export const addNewslettersToLabel = (labelData) => async (dispatch) => {
 
   if (!error) {
     dispatch(D.addNewslettersToLabelSuccess(data));
+    dispatch(D.resetUnsavedLabel());
     return;
   }
 };

@@ -24,7 +24,8 @@ export const deleteSavedEmails = (selected, labelId) => ({
   labelId
 });
 
-export const resetAdditionalNewsletters = () => ({
-  type: 'RESET_ADDITIONAL_NEWSLETTERS',
-  additionalNewsletters: []
+export const resetUnsavedLabel = () => ({
+  type: 'RESET_UNSAVED_LABEL',
+  additionalNewsletters: [],
+  emails: []
 });

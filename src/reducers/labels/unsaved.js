@@ -24,9 +24,10 @@ export default handleActions(
       ...state,
       additionalNewsletters: state.additionalNewsletters.filter(deleteNewsletter(action.payload))
     }),
-    RESET_ADDITIONAL_NEWSLETTERS: (state, action) => ({
+    RESET_UNSAVED_LABEL: (state, action) => ({
       ...state,
-      additionalNewsletters: action.additionalNewsletters
+      additionalNewsletters: action.additionalNewsletters,
+      emails: action.emails
     })
   },
   initialState
