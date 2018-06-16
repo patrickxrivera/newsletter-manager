@@ -12,3 +12,8 @@ export const resetCurrentLabel = () => ({
   type: 'RESET_CURRENT_LABEL',
   currentLabel: null
 });
+
+export const deleteLabelSuccess = (labelId) => ({
+  type: 'DELETE_LABEL',
+  labelId
+});

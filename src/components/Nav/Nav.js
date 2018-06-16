@@ -11,7 +11,9 @@ const Nav = ({ isAuthenticated, ...props }) =>
 
 const renderSignedIn = ({ handleSignOutClick }) => (
   <Style.Wrapper>
-    <Style.Title>NewsletterManager</Style.Title>
+    <Style.StyledLink to="/">
+      <Style.Title>NewsletterManager</Style.Title>{' '}
+    </Style.StyledLink>
     <Style.MenuWrapper>
       <Style.StyledLink activeClassName="active" exact to="/labels">
         My Labels

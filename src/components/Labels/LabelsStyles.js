@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { fadeIn } from '../../utils/animations';
+import { fadeInUp } from '../../utils/animations';
 
 export const Wrapper = styled.div`
   background-color: rgb(233, 235, 238);
@@ -33,7 +33,7 @@ export const Tile = styled.div`
   flex-direction: column;
   justify-content: space-between;
   opacity: 0;
-  animation: ${fadeIn} 200ms 130ms ease-in forwards;
+  animation: ${fadeInUp} 300ms 180ms ease-out forwards;
 `;
 
 export const TileTitle = styled.span`

@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import { omit } from 'ramda';
 
 const initialState = {
   currentLabel: null
@@ -21,6 +22,10 @@ export default handleActions(
     RESET_CURRENT_LABEL: (state, action) => ({
       ...state,
       currentLabel: action.currentLabel
+    }),
+    DELETE_LABEL: (state, action) => ({
+      ...state,
+      labels: omit([action.labelId], state.labels)
     })
   },
   initialState

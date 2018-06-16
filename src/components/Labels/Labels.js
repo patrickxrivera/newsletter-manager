@@ -6,27 +6,30 @@ import Button from '@material-ui/core/Button';
 import { values } from 'ramda';
 
 import * as Style from './LabelsStyles';
+import DeleteLabel from './DeleteLabel';
 import keys from '../../endpoints';
 import getStyle from './getStyle';
 import { gmailButton, fontSize } from '../Confirm/ConfirmStyles';
 
-const Labels = ({ savedLabels }) => (
+const Labels = ({ savedLabels, openDialog, ...rest }) => (
   <Style.Wrapper>
     <MuiThemeProvider>
       <Style.InnerWrapper>
-        <Style.TilesWrapper>{values(savedLabels).map(renderTile)}</Style.TilesWrapper>
+        <Style.TilesWrapper>{values(savedLabels).map(renderTile(rest))}</Style.TilesWrapper>
+        {openDialog && <DeleteLabel openDialog={openDialog} {...rest} />}
       </Style.InnerWrapper>
     </MuiThemeProvider>
   </Style.Wrapper>
 );
 
-const renderTile = ({ addedNewsletters, labelName, labelId }, idx) => {
+const renderTile = ({ handleOpen }) => ({ addedNewsletters, labelName, labelId }, idx) => {
   const style = getStyle(idx);
 
   return (
     <Style.Tile key={`${labelName}`}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <FloatingActionButton
+          onClick={handleOpen(labelName, labelId)}
           iconStyle={{ ...style.icon, ...Style.icon }}
           style={{ ...style.floatingBtn, ...Style.floatingBtn }}>
           <ContentClear />
