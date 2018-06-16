@@ -27,7 +27,7 @@ export default handleActions(
   initialState
 );
 
-const isSelected = (selected) => ({ accountName }) => !selected.includes(accountName);
+const isSelected = (selected) => ({ emailAddress }) => !selected.includes(emailAddress);
 
 const deleteNewsletter = (selected) => (curr) => curr !== selected;
 

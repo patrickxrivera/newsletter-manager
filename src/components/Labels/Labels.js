@@ -3,23 +3,34 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentClear from 'material-ui/svg-icons/content/clear';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Button from '@material-ui/core/Button';
-import { values } from 'ramda';
+import { isEmpty, values } from 'ramda';
 
 import * as Style from './LabelsStyles';
 import DeleteLabel from './DeleteLabel';
+import ErrorPage from '../ErrorPage/ErrorPage';
 import keys from '../../endpoints';
 import getStyle from './getStyle';
 import { gmailButton, fontSize } from '../Confirm/ConfirmStyles';
 
-const Labels = ({ savedLabels, openDialog, ...rest }) => (
+const Labels = ({ savedLabels, errorMsg, ...rest }) => (
   <Style.Wrapper>
     <MuiThemeProvider>
       <Style.InnerWrapper>
-        <Style.TilesWrapper>{values(savedLabels).map(renderTile(rest))}</Style.TilesWrapper>
-        {openDialog && <DeleteLabel openDialog={openDialog} {...rest} />}
+        {!savedLabels || isEmpty(savedLabels) ? (
+          <ErrorPage errorMsg={errorMsg} />
+        ) : (
+          renderTileWrapper(savedLabels, rest)
+        )}
       </Style.InnerWrapper>
     </MuiThemeProvider>
   </Style.Wrapper>
+);
+
+const renderTileWrapper = (savedLabels, { openDialog, ...rest }) => (
+  <div>
+    <Style.TilesWrapper>{values(savedLabels).map(renderTile(rest))}</Style.TilesWrapper>
+    {openDialog && <DeleteLabel openDialog={openDialog} {...rest} />}
+  </div>
 );
 
 const renderTile = ({ handleOpen }) => ({ addedNewsletters, labelName, labelId }, idx) => {
@@ -46,6 +57,7 @@ const renderTile = ({ handleOpen }) => ({ addedNewsletters, labelName, labelId }
             to={{
               pathname: `/label/${labelName}`,
               state: {
+                labelId: labelId,
                 title: labelName,
                 emails: addedNewsletters,
                 btnStyle: gmailButton,

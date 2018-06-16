@@ -4,18 +4,19 @@ import ReactLoading from 'react-loading';
 import * as Style from '../Form/Settings/SettingsStyles';
 import { Wrapper } from '../Loading/LoadingStyles';
 import { Link, ContentWrapper, Text, errorPageButton } from './ErrorPageStyles';
+import { StyledLink } from '../Nav/NavStyles';
 
 const ErrorPage = ({ errorMsg }) => (
   <Wrapper>
     <ContentWrapper>
       <Text>{errorMsg}</Text>
-      <Link href="/" style={{}}>
+      <StyledLink to="/label/new">
         <Style.Btn type="submit" style={errorPageButton} variant="raised">
           <Style.ButtonArea>
             <Style.Text>Create Label</Style.Text>
           </Style.ButtonArea>
         </Style.Btn>
-      </Link>
+      </StyledLink>
     </ContentWrapper>
   </Wrapper>
 );

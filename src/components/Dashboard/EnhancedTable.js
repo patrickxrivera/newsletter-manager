@@ -31,17 +31,19 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, hideCheckbox } = this.props;
 
     return (
       <TableHead>
         <TableRow>
           <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={numSelected === rowCount}
-              onChange={onSelectAllClick}
-            />
+            {!hideCheckbox && (
+              <Checkbox
+                indeterminate={numSelected > 0 && numSelected < rowCount}
+                checked={numSelected === rowCount}
+                onChange={onSelectAllClick}
+              />
+            )}
           </TableCell>
           {columnData.map((column) => {
             return (
@@ -178,13 +180,16 @@ class EnhancedTable extends React.Component {
   };
 
   handleDeleteClick = () => {
-    this.props.deleteEmails(this.state.selected);
+    const { labelId, deleteEmails } = this.props;
+
+    this.handleSelectAllClick();
+
+    deleteEmails(this.state.selected, labelId);
   };
 
   handleSelectAllClick = (event, checked) => {
-    console.log({ checked });
     checked
-      ? this.setState({ selected: this.props.emails.map((e) => e.accountName) })
+      ? this.setState({ selected: this.props.emails.map((e) => e.emailAddress) })
       : this.setState({ selected: [] });
   };
 
@@ -220,15 +225,13 @@ class EnhancedTable extends React.Component {
   isSelected = (id) => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, emails, title, tableManagerStyle, btnStyle, fontSize } = this.props;
+    const { classes, emails, title, tableManagerStyle, btnStyle, fontSize, ...props } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, emails.length - page * rowsPerPage);
 
-    // console.log(emails);
-
     const tableStyle = {
       marginTop: '0px',
-      width: '50%',
+      width: props.width.style || '50%',
       borderRadius: '10px',
       ...tableManagerStyle
     };
@@ -248,6 +251,7 @@ class EnhancedTable extends React.Component {
             className={classes.table}
             aria-labelledby="tableTitle">
             <EnhancedTableHead
+              hideCheckbox={props.hideCheckbox}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -257,18 +261,18 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {emails.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((e) => {
-                const isSelected = this.isSelected(e.accountName);
+                const isSelected = this.isSelected(e.emailAddress);
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => this.handleClick(event, e.accountName)}
+                    onClick={(event) => this.handleClick(event, e.emailAddress)}
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={e.accountName}
+                    key={e.emailAddress}
                     selected={isSelected}>
                     <TableCell padding="checkbox">
-                      <Checkbox checked={isSelected} />
+                      {!props.hideCheckbox && <Checkbox checked={isSelected} />}
                     </TableCell>
                     <TableCell component="th" scope="row" padding="none">
                       {e.accountName}

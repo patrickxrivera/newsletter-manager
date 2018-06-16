@@ -17,3 +17,9 @@ export const deleteLabelSuccess = (labelId) => ({
   type: 'DELETE_LABEL',
   labelId
 });
+
+export const deleteSavedEmails = (selected, labelId) => ({
+  type: 'DELETE_SAVED_EMAILS',
+  selected,
+  labelId
+});

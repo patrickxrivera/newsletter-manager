@@ -31,6 +31,8 @@ const renderConfirmationPage = ({ addedNewsletters, labelName }, rest = {}) => (
       btnStyle={gmailButton}
       fontSize={fontSize}
       tableManagerStyle={{ margin: '0 auto' }}
+      width={{ style: '40%' }}
+      hideCheckbox={true}
       {...rest}
     />
   </ContentWrapper>

@@ -30,7 +30,14 @@ const handleDashboardRender = ({ emails, loadingMsg, errorMsg, ...rest }) => {
 
 const renderEnhancedTable = (emails, rest) => (
   <ContentWrapper className="fade-in">
-    <EnhancedTable btnStyle={primaryButton} title={'Your Newsletters'} emails={emails} {...rest} />
+    <EnhancedTable
+      btnStyle={primaryButton}
+      title={'Your Newsletters'}
+      emails={emails}
+      {...rest}
+      width={{}}
+      hideCheckbox={false}
+    />
     <FormWrapper>
       <NewsletterContainer />
       <SettingsContainer />

@@ -10,7 +10,8 @@ class LabelsContainer extends Component {
   state = {
     openDialog: false,
     selectedLabelName: null,
-    selectedLabelId: null
+    selectedLabelId: null,
+    errorMsg: `No labels created yet. Get started below!`
   };
 
   handleOpen = (selectedLabelName, selectedLabelId) => () => {
