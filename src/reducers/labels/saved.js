@@ -27,3 +27,5 @@ export default handleActions(
 );
 
 export const getCurrentLabel = ({ savedLabels }) => savedLabels.currentLabel;
+
+export const getSavedLabels = ({ savedLabels }) => savedLabels.labels;

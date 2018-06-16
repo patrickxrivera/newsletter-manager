@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { fadeIn } from '../../utils/animations';
 
 export const Wrapper = styled.div`
   background-color: rgb(233, 235, 238);
@@ -13,6 +14,11 @@ export const InnerWrapper = styled.div`
 
 export const TilesWrapper = styled.div`
   margin: 2rem 6rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+  grid-auto-rows: minmax(100px, 250px);
+  justify-content: center;
 `;
 
 export const Tile = styled.div`
@@ -25,6 +31,8 @@ export const Tile = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  opacity: 0;
+  animation: ${fadeIn} 400ms 130ms ease-in forwards;
 `;
 
 export const TileTitle = styled.span`
@@ -47,12 +55,27 @@ export const ActionsWrapper = styled.div`
 `;
 
 export const Text = styled.div`
-  color: #0984e3;
+  color: ${({ color }) => color};
 `;
 
-export const primaryButton = {
-  color: '#fff',
-  backgroundColor: '#0984e3',
-  height: '20px',
-  width: '75px'
+export const Link = styled.a`
+  text-decoration: none;
+  color: inherit;
+`;
+
+export const icon = {
+  width: '23px',
+  height: '23px',
+  backgroundColor: '#fff'
+};
+
+export const floatingBtn = {
+  width: '30px',
+  height: '30px',
+  padding: '3px',
+  alignSelf: 'flex-end'
+};
+
+export const primaryBtn = {
+  color: '#fff'
 };
