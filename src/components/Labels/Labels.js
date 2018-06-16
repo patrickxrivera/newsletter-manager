@@ -7,22 +7,7 @@ import { values } from 'ramda';
 
 import * as Style from './LabelsStyles';
 import keys from '../../endpoints';
-
-const theme = 'red';
-
-const applyStyle = (color) => ({
-  floatingBtn: {
-    borderColor: color
-  },
-  icon: {
-    fill: color
-  },
-  primaryBtn: {
-    backgroundColor: color
-  }
-});
-
-const colors = ['#0984e3', '#ff7675', '#00cec9', '#a29bfe', '#00b894', '#6c5ce7'];
+import getStyle from './getStyle';
 
 const Labels = ({ savedLabels }) => (
   <Style.Wrapper>
@@ -35,9 +20,7 @@ const Labels = ({ savedLabels }) => (
 );
 
 const renderTile = ({ addedNewsletters, labelName }, idx) => {
-  const color = colors[idx % colors.length];
-  const style = applyStyle(color);
-  console.log({ color });
+  const style = getStyle(idx);
 
   return (
     <Style.Tile key={`${labelName}`}>
@@ -53,7 +36,7 @@ const renderTile = ({ addedNewsletters, labelName }, idx) => {
       <div>
         <Style.ActionsWrapper>
           <Style.Link href={`${keys.gmail}${labelName}`} target="_blank">
-            <Style.Text color={color}>Gmail</Style.Text>
+            <Style.Text color={style.icon.fill}>Gmail</Style.Text>
           </Style.Link>{' '}
           <Button
             size="small"

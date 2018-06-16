@@ -32,7 +32,7 @@ export const Tile = styled.div`
   flex-direction: column;
   justify-content: space-between;
   opacity: 0;
-  animation: ${fadeIn} 400ms 130ms ease-in forwards;
+  animation: ${fadeIn} 200ms 130ms ease-in forwards;
 `;
 
 export const TileTitle = styled.span`
