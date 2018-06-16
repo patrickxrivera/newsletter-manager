@@ -36,9 +36,7 @@ const Auth = {
     return Auth.oAuth2Client.refreshAccessToken();
   },
 
-  updateTokens: async (req, next) => {
-    const { id } = req.body;
-
+  updateTokens: async (id, next) => {
     const [token] = await query.getRefreshToken(id).catch(handleError(next));
 
     return Auth.refreshAccessToken(token).catch(next);
