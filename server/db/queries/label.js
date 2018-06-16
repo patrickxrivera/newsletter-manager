@@ -5,30 +5,11 @@ const handleError = require('../../utils/handleError');
 
 const addNewslettersToLabel = async (req, labelData) => {
   await addLabel(req.body, labelData);
-  await addEmails(labelData);
   await addLabelEmails(labelData);
 };
 
 const addLabel = (user, { labelId }) =>
   db('label').insert({ id: labelId, name: user.labelName, user_id: user.id });
-
-const addEmails = ({ addedNewsletters }) => {
-  const uniqueNewsletters = addedNewsletters.filter(findUnique(new Set()));
-
-  return Promise.all(uniqueNewsletters.map(addEmail));
-};
-
-const addEmail = async ({ accountName, emailAddress }) => {
-  const email = await db('email')
-    .select('email_address')
-    .where('email_address', emailAddress);
-
-  if (itemExists(email)) return;
-
-  return db('email')
-    .insert({ account_name: accountName, email_address: emailAddress })
-    .returning('email_address');
-};
 
 const addLabelEmails = ({ addedNewsletters, labelId }) => {
   const uniqueNewsletters = addedNewsletters.filter(findUnique(new Set()));
@@ -36,8 +17,12 @@ const addLabelEmails = ({ addedNewsletters, labelId }) => {
   return Promise.all(uniqueNewsletters.map(addLabelEmail(labelId)));
 };
 
-const addLabelEmail = (labelId) => ({ emailAddress }) =>
-  db('label_email').insert({ email_address: emailAddress, label_id: labelId });
+const addLabelEmail = (labelId) => ({ emailAddress, accountName }) =>
+  db('label_email').insert({
+    email_address: emailAddress,
+    account_name: accountName,
+    label_id: labelId
+  });
 
 const deleteLabel = async (userId, labelId) => {
   await db('label_email')
@@ -50,10 +35,35 @@ const deleteLabel = async (userId, labelId) => {
     .del();
 };
 
+const getLabels = async (userId, next) => {
+  const labels = await db('label')
+    .select(['id', 'name'])
+    .where({ user_id: userId })
+    .catch(handleError(next));
+
+  return Promise.all(labels.map(getLabelEmails));
+};
+
+const getLabelEmails = async ({ id, name }) => {
+  const labelEmails = await db('label_email')
+    .select(['email_address', 'account_name'])
+    .where('label_id', id);
+
+  const formattedLabelEmails = labelEmails.reduce(applyFormat, []);
+
+  return { labelId: id, labelName: name, addedNewsletters: formattedLabelEmails };
+};
+
+const applyFormat = (acc, { email_address, account_name }) => [
+  ...acc,
+  {
+    emailAddress: email_address,
+    accountName: account_name
+  }
+];
+
 module.exports = {
-  addLabel,
-  addEmails,
-  addLabelEmails,
   addNewslettersToLabel,
-  deleteLabel
+  deleteLabel,
+  getLabels
 };

@@ -36,7 +36,16 @@ const deleteLabel = async (req, res, next) => {
   query.deleteLabel(id, labelId);
 };
 
+const getLabels = async (req, res, next) => {
+  const { id } = req.query;
+
+  const labels = await query.getLabels(id, next).catch(handleError(next));
+
+  res.send(labels);
+};
+
 module.exports = {
   addNewslettersToLabel,
-  deleteLabel
+  deleteLabel,
+  getLabels
 };

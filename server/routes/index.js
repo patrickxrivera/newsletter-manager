@@ -13,4 +13,5 @@ module.exports = (app) => {
   // Label
   app.post('/api/label/create', LabelController.addNewslettersToLabel);
   app.delete('/api/label', LabelController.deleteLabel);
+  app.get('/api/labels', LabelController.getLabels);
 };
