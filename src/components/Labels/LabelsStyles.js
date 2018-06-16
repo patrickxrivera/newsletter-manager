@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { fadeIn } from '../../utils/animations';
 
 export const Wrapper = styled.div`
@@ -58,7 +59,12 @@ export const Text = styled.div`
   color: ${({ color }) => color};
 `;
 
-export const Link = styled.a`
+export const RegLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+`;
+
+export const RouterLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 `;
@@ -78,4 +84,8 @@ export const floatingBtn = {
 
 export const primaryBtn = {
   color: '#fff'
+};
+
+export const tableManager = {
+  margin: '0 auto'
 };

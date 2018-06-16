@@ -8,6 +8,7 @@ import { values } from 'ramda';
 import * as Style from './LabelsStyles';
 import keys from '../../endpoints';
 import getStyle from './getStyle';
+import { gmailButton, fontSize } from '../Confirm/ConfirmStyles';
 
 const Labels = ({ savedLabels }) => (
   <Style.Wrapper>
@@ -19,7 +20,7 @@ const Labels = ({ savedLabels }) => (
   </Style.Wrapper>
 );
 
-const renderTile = ({ addedNewsletters, labelName }, idx) => {
+const renderTile = ({ addedNewsletters, labelName, labelId }, idx) => {
   const style = getStyle(idx);
 
   return (
@@ -35,15 +36,27 @@ const renderTile = ({ addedNewsletters, labelName }, idx) => {
       </div>
       <div>
         <Style.ActionsWrapper>
-          <Style.Link href={`${keys.gmail}${labelName}`} target="_blank">
+          <Style.RegLink href={`${keys.gmail}${labelName}`} target="_blank">
             <Style.Text color={style.icon.fill}>Gmail</Style.Text>
-          </Style.Link>{' '}
-          <Button
-            size="small"
-            style={{ ...style.primaryBtn, ...Style.primaryBtn }}
-            variant="raised">
-            View
-          </Button>
+          </Style.RegLink>{' '}
+          <Style.RouterLink
+            to={{
+              pathname: `/label/${labelName}`,
+              state: {
+                title: labelName,
+                emails: addedNewsletters,
+                btnStyle: gmailButton,
+                fontSize: fontSize,
+                tableManagerStyle: Style.tableManager
+              }
+            }}>
+            <Button
+              size="small"
+              style={{ ...style.primaryBtn, ...Style.primaryBtn }}
+              variant="raised">
+              View
+            </Button>
+          </Style.RouterLink>
         </Style.ActionsWrapper>
       </div>
     </Style.Tile>

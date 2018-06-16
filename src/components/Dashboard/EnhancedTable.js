@@ -224,6 +224,8 @@ class EnhancedTable extends React.Component {
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, emails.length - page * rowsPerPage);
 
+    // console.log(emails);
+
     const tableStyle = {
       marginTop: '0px',
       width: '50%',

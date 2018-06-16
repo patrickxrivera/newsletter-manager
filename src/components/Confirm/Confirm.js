@@ -23,11 +23,11 @@ const handleConfirmation = ({ currentLabel, loadingMsg }) => {
   }
 };
 
-const renderConfirmationPage = (currentLabel, rest = {}) => (
+const renderConfirmationPage = ({ addedNewsletters, labelName }, rest = {}) => (
   <ContentWrapper className="fade-in">
     <EnhancedTable
-      title={currentLabel.labelName}
-      emails={currentLabel.addedNewsletters}
+      title={labelName}
+      emails={addedNewsletters}
       btnStyle={gmailButton}
       fontSize={fontSize}
       tableManagerStyle={{ margin: '0 auto' }}
