@@ -17,7 +17,9 @@ const appReducer = combineReducers({
 // clear state on sign out
 const rootReducer = (state, action) => {
   if (action.type === 'SIGN_OUT_USER') {
-    state = undefined;
+    state = {
+      savedLabels: state.savedLabels
+    };
   }
 
   return appReducer(state, action);

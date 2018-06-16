@@ -6,13 +6,13 @@ import { isEmpty } from 'ramda';
 import * as Style from './NewsletterStyles';
 import ChipArray from './ChipArray';
 
-const Newsletter = ({ handleSubmit, handleFormSubmit, input, ...rest }) => (
+const Newsletter = ({ handleSubmit, handleFormSubmit, input, title, subheading, ...rest }) => (
   <Style.Wrapper>
     <Typography style={Style.title} variant="title" id="formTitle">
-      Did we miss any?
+      {title}
     </Typography>
     <Typography style={Style.subheading} variant="subheading" id="formSubscript">
-      Add newsletters below:
+      {subheading}
     </Typography>
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <Field
@@ -27,23 +27,30 @@ const Newsletter = ({ handleSubmit, handleFormSubmit, input, ...rest }) => (
   </Style.Wrapper>
 );
 
-const renderNewsletterForm = ({ input, additionalNewsletters, ...props }) => [
+const renderNewsletterForm = ({ input, additionalNewsletters, placeholder, ...props }) => [
   <Style.SearchIcon key={1} onClick={props.handleSubmit(props.handleFormSubmit)} />,
   <Style.Input key={2} placeholder="Enter newsletter" {...input} />,
   <Style.NewslettersList key={3}>
     {isEmpty(additionalNewsletters)
-      ? renderPlaceholder()
-      : renderAdditionalNewsletters({ additionalNewsletters })}
+      ? renderPlaceholder(placeholder)
+      : renderAdditionalNewsletters({ additionalNewsletters, ...props })}
   </Style.NewslettersList>
 ];
 
-const renderAdditionalNewsletters = (props) => [
-  <Style.NewslettersListHeading key={1}>Additional Newsletters</Style.NewslettersListHeading>,
+const renderAdditionalNewsletters = ({ listHeading, ...props }) => [
+  <Style.NewslettersListHeading key={1}>{listHeading}</Style.NewslettersListHeading>,
   <ChipArray key={2} {...props} />
 ];
 
-const renderPlaceholder = () => (
-  <Style.PlaceholderText>No additional newsletters added yet.</Style.PlaceholderText>
+const renderPlaceholder = (placeholder) => (
+  <Style.PlaceholderText>{placeholder}</Style.PlaceholderText>
 );
+
+Newsletter.defaultProps = {
+  placeholder: 'No additional newsletters added yet.',
+  subheading: 'Add newsletters below',
+  title: 'Did we miss any?',
+  listHeading: 'Additional Newsletters'
+};
 
 export default Newsletter;

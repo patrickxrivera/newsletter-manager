@@ -23,3 +23,8 @@ export const deleteSavedEmails = (selected, labelId) => ({
   selected,
   labelId
 });
+
+export const resetAdditionalNewsletters = () => ({
+  type: 'RESET_ADDITIONAL_NEWSLETTERS',
+  additionalNewsletters: []
+});

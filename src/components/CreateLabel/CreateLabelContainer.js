@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
+import CreateLabel from './CreateLabel';
+
 class CreateLabelContainer extends Component {
   render() {
-    return <div>Create Label</div>;
+    return <CreateLabel />;
   }
 }
 
