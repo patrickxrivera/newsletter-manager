@@ -3,7 +3,7 @@ import GoogleIcon from 'react-icons/lib/fa/google';
 
 import * as Style from './LandingPageStyles';
 import endpoint from '../../endpoints';
-
+console.log(endpoint);
 const LandingPage = () => (
   <Style.Wrapper>
     <Style.BackgroundImg src="https://source.unsplash.com/tg1Z_ljKwKk/1600x900" />

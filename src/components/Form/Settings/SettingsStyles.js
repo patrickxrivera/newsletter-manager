@@ -5,15 +5,16 @@ import Button from '@material-ui/core/Button';
 import media from '../../../utils/mediaTemplate';
 
 export const Wrapper = styled.div`
-  min-width: 350px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
     0px 3px 1px -2px rgba(0, 0, 0, 0.12);
   padding: 24px 24px 9px;
   min-height: 280px;
+  width: 570px;
+  margin: 0 auto 1rem;
 
-  ${media.tablet`min-width: 200px`};
+  ${media.tablet`width: 90%`};
   ${media.tablet`margin-bottom: 2rem`};
 `;
 

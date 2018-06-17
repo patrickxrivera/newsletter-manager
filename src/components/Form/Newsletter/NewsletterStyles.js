@@ -4,7 +4,6 @@ import { Search } from 'react-feather';
 import media from '../../../utils/mediaTemplate';
 
 export const Wrapper = styled.div`
-  min-width: 350px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
@@ -12,8 +11,10 @@ export const Wrapper = styled.div`
   padding: 24px;
   min-height: 290px;
   margin-bottom: 1rem;
+  width: 570px;
+  margin: 0 auto 1rem;
 
-  ${media.tablet`min-width: 200px`};
+  ${media.tablet`width: 90%`};
   ${media.tablet`margin: 1.5rem 0`};
 `;
 

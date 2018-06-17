@@ -29,8 +29,9 @@ export const FormWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-left: 1rem;
-  min-width: 550px;
+  ${'' /* min-width: 550px; */}
 
-  ${media.tablet`min-width: 300px`};
-  ${media.tablet`margin-left: 0`};
+  ${'' /* ${media.tablet`min-width: 300px`}; */}
+  width: 100%
+  ${media.tablet`margin: 0 auto`};
 `;

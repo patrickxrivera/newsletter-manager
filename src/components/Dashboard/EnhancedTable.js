@@ -230,10 +230,11 @@ class EnhancedTable extends React.Component {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, emails.length - page * rowsPerPage);
 
     const tableStyle = {
-      marginTop: '0px',
+      margin: '0 auto',
       minWidth: props.width.style || '350px',
-      maxWidth: '600px',
+      maxWidth: '650px',
       borderRadius: '10px',
+      height: '670px',
       ...tableManagerStyle
     };
 
