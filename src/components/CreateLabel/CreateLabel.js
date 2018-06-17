@@ -8,7 +8,7 @@ const CreateLabel = () => (
   <Wrapper>
     <InnerWrapper>
       <ContentWrapper className="fade-in">
-        <FormWrapper style={{ margin: '0 auto', height: '660px' }}>
+        <FormWrapper style={{ margin: '0 auto', height: '100%' }}>
           <NewsletterContainer
             title={'Add Newsletters'}
             subheading={'Submit newsletters below:'}

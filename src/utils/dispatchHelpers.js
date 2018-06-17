@@ -34,3 +34,8 @@ export const fetchSavedLabelsSuccess = (savedLabels) => ({
   type: 'FETCH_SAVED_LABELS',
   savedLabels
 });
+
+export const fetchError = (message = `It's not you, it's us. Let's try that again.`) => ({
+  type: 'FETCH_ERROR',
+  message
+});

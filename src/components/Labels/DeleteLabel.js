@@ -6,6 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+export const primaryButton = {
+  color: '#fff',
+  backgroundColor: '#34a853'
+};
+
 const DeleteLabel = ({ openDialog, handleOpen, handleClose, deleteLabel, ...props }) => (
   <Dialog
     maxWidth="xs"
@@ -20,13 +25,17 @@ const DeleteLabel = ({ openDialog, handleOpen, handleClose, deleteLabel, ...prop
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={handleClose}>Nah, I'm good.</Button>
+      <Button onClick={handleClose} style={{ color: 'rgba(0, 0, 0, 0.7)' }}>
+        Nah, I'm good.
+      </Button>
       <Button
         onClick={() => {
           deleteLabel(props.userId, props.selectedLabelId);
           handleClose();
         }}
-        style={{ color: '#27ae60' }}
+        style={primaryButton}
+        variant="raised"
+        size="xs"
         autoFocus>
         Yaaas.
       </Button>

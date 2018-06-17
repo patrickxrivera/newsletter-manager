@@ -17,8 +17,10 @@ const Dashboard = (props) => (
   </Wrapper>
 );
 
-const handleDashboardRender = ({ emails, loadingMsg, errorMsg, ...rest }) => {
+const handleDashboardRender = ({ emails, loadingMsg, errorMsg, fetchError, ...rest }) => {
   switch (true) {
+    case !isNil(fetchError):
+      return <ErrorPage errorMsg={fetchError} />;
     case isNil(emails):
       return <Loading loadingMsg={loadingMsg} />;
     case isEmpty(emails):

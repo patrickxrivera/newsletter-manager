@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import media from '../../utils/mediaTemplate';
+
 export const Link = styled.a`
   text-decoration: none;
 `;
@@ -16,6 +18,9 @@ export const ContentWrapper = styled.div`
   justify-content: center;
   padding: 0 1rem;
   box-shadow: rgba(23, 43, 99, 0.26) 0 7px 42px;
+
+  ${media.tablet`min-width: 350px`};
+  ${media.tablet`margin: 5rem 1rem`};
 `;
 
 export const Text = styled.div`

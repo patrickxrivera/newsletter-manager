@@ -5,6 +5,7 @@ import { isNil } from 'ramda';
 import Dashboard from './Dashboard';
 import { fetchInitialEmails, deleteEmails } from '../../actions/labels/unsaved';
 import { getId } from '../../reducers/auth';
+import { getFetchError } from '../../reducers/errors';
 import { getInitialEmails } from '../../reducers/labels/unsaved';
 
 class DashboardContainer extends Component {
@@ -28,7 +29,8 @@ class DashboardContainer extends Component {
 
 const mapStateToProps = (state) => ({
   id: getId(state),
-  emails: getInitialEmails(state)
+  emails: getInitialEmails(state),
+  fetchError: getFetchError(state)
 });
 
 export default connect(mapStateToProps, { fetchInitialEmails, deleteEmails })(DashboardContainer);

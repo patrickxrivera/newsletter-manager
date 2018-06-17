@@ -1,15 +1,17 @@
 import { handleActions } from 'redux-actions';
 
-const initialState = {};
+const initialState = {
+  fetchError: null
+};
 
 export default handleActions(
   {
-    ADD_NEWSLETTERS_TO_LABEL_CONFIRMATION_ERROR: (state, action) => ({
+    FETCH_ERROR: (state, action) => ({
       ...state,
-      addNewslettersToLabel: action.errorMsg
+      fetchError: action.message
     })
   },
   initialState
 );
 
-export const getConfirmationError = ({ errors }) => errors.addNewslettersToLabel;
+export const getFetchError = ({ errors }) => errors.fetchError;

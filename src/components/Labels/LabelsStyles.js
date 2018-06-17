@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+import media from '../../utils/mediaTemplate';
 import { fadeInUp } from '../../utils/animations';
 
 export const Wrapper = styled.div`
   background-color: rgb(233, 235, 238);
   height: 100vh;
   width: 100vw;
+
+  ${media.tablet`height: 100%;`};
 `;
 
 export const InnerWrapper = styled.div`
@@ -20,6 +24,13 @@ export const TilesWrapper = styled.div`
   grid-gap: 30px;
   grid-auto-rows: minmax(100px, 250px);
   justify-content: center;
+
+  ${media.tablet`grid-gap: 40px;`};
+  ${media.tablet`grid-template-columns: repeat(3, 1fr);`};
+  ${media.tablet`grid-auto-rows: minmax(100px, 250px);`};
+
+  ${media.phone`grid-template-columns: 300px;`};
+  ${media.phone`grid-auto-rows: minmax(100px, 250px);`};
 `;
 
 export const Tile = styled.div`

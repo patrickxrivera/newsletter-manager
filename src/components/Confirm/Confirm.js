@@ -3,6 +3,7 @@ import { isNil, isEmpty } from 'ramda';
 
 import Loading from '../Loading/Loading';
 import EnhancedTable from '../Dashboard/EnhancedTable';
+import ErrorPage from '../ErrorPage/ErrorPage';
 import { Wrapper, InnerWrapper, ContentWrapper } from '../Dashboard/DashboardStyles';
 import { gmailButton, fontSize } from './ConfirmStyles';
 
@@ -12,8 +13,10 @@ const Confirm = (props) => (
   </Wrapper>
 );
 
-const handleConfirmation = ({ currentLabel, loadingMsg }) => {
+const handleConfirmation = ({ currentLabel, loadingMsg, fetchError }) => {
   switch (true) {
+    case !isNil(fetchError):
+      return <ErrorPage errorMsg={fetchError} />;
     case isNil(currentLabel):
       return <Loading loadingMsg={loadingMsg} />;
     case isEmpty(currentLabel):

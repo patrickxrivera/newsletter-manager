@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Confirm from './Confirm';
-import { getConfirmationError } from '../../reducers/errors';
+import { getFetchError } from '../../reducers/errors';
 import { getCurrentLabel } from '../../reducers/labels/saved';
 
 class ConfirmContainer extends Component {
@@ -16,7 +16,7 @@ class ConfirmContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  confirmationError: getConfirmationError(state),
+  fetchError: getFetchError(state),
   currentLabel: getCurrentLabel(state)
 });
 

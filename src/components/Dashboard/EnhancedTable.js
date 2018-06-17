@@ -231,7 +231,8 @@ class EnhancedTable extends React.Component {
 
     const tableStyle = {
       marginTop: '0px',
-      width: props.width.style || '50%',
+      minWidth: props.width.style || '350px',
+      maxWidth: '600px',
       borderRadius: '10px',
       ...tableManagerStyle
     };

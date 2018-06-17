@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+
+import media from '../../utils/mediaTemplate';
 import { NavLink } from 'react-router-dom';
 
 export const Wrapper = styled.div`
@@ -6,11 +8,17 @@ export const Wrapper = styled.div`
   padding-bottom: 1.2rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid rgb(222, 224, 229);
+
+  ${media.phone`flex-direction: column`};
 `;
 
 export const Title = styled.div`
   font-size: 26px;
+
+  ${media.phone`font-size: 18px`};
+  ${media.phone`margin-bottom: 1rem`};
 `;
 
 export const Link = styled.a`
@@ -29,6 +37,8 @@ export const Divider = styled.div`
   height: 1.2px;
   background-color: #ddd;
   transform: rotate(90deg);
+
+  ${media.phone`margin: 0`};
 `;
 
 export const StyledLink = styled(NavLink)`

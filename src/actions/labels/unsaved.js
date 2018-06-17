@@ -5,24 +5,30 @@ import * as D from '../../utils/dispatchHelpers';
 
 export const addNewslettersToLabel = (labelData) => async (dispatch) => {
   dispatch(D.resetCurrentLabel());
+  dispatch(D.fetchError(null));
 
   const { id, labelName, emailAddresses, additionalNewsletters } = labelData;
 
   const queries = [...emailAddresses, ...additionalNewsletters].map((q) => `from:${q}`);
 
-  const { data, error } = await api.addNewslettersToLabelSent(id, labelName, queries);
-
-  if (!error) {
+  try {
+    const { data } = await api.addNewslettersToLabelSent(id, labelName, queries);
     dispatch(D.addNewslettersToLabelSuccess(data));
     dispatch(D.resetUnsavedLabel());
-    return;
+  } catch (err) {
+    dispatch(D.fetchError());
   }
 };
 
 export const fetchInitialEmails = (id) => async (dispatch) => {
-  const initialEmails = await api.fetchInitialEmailsSent(id);
+  dispatch(D.fetchError(null));
 
-  dispatch(D.fetchInitialEmailsSuccess(initialEmails.data));
+  try {
+    const initialEmails = await api.fetchInitialEmailsSent(id);
+    dispatch(D.fetchInitialEmailsSuccess(initialEmails.data));
+  } catch (err) {
+    dispatch(D.fetchError());
+  }
 };
 
 export const deleteEmails = createAction('DELETE_EMAILS');
