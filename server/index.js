@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
     connectionString: process.env.DATABASE_URL,
     ssl: true
   });
-
+  console.log(process.env.DATABASE_URL);
   client.connect();
 
   client.query('SELECT * FROM user_account;', (err, res) => {
