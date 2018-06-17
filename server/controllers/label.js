@@ -17,9 +17,11 @@ const addNewslettersToLabel = async (req, res, next) => {
 
   res.send(labelData);
 
-  query.updateUser(credentials, id).catch(next);
-
-  query.addNewslettersToLabel(req, labelData, next);
+  await Promise.all([
+    Gmail.addFilter(labelData),
+    query.updateUser(credentials, id).catch(next),
+    query.addNewslettersToLabel(req, labelData, next)
+  ]);
 };
 
 const deleteLabel = async (req, res, next) => {
@@ -31,15 +33,16 @@ const deleteLabel = async (req, res, next) => {
 
   res.send({ success: true });
 
-  query.updateUser(credentials, id).catch(next);
-
-  query.deleteLabel(id, labelId);
+  await Promise.all([
+    query.updateUser(credentials, id).catch(next),
+    query.deleteLabel(id, labelId)
+  ]);
 };
 
 const getLabels = async (req, res, next) => {
-  const { id } = req.query;
+  const { userId } = req.query;
 
-  const labels = await query.getLabels(id, next).catch(handleError(next));
+  const labels = await query.getLabels(userId, next).catch(handleError(next));
 
   res.send(labels);
 };

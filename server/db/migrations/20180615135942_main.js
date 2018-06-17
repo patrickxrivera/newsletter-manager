@@ -26,7 +26,6 @@ exports.up = (knex, Promise) =>
 exports.down = (knex, Promise) =>
   Promise.all([
     knex.schema.dropTable('label_email'),
-    knex.schema.dropTable('email'),
     knex.schema.dropTable('label'),
     knex.schema.dropTable('user_account')
   ]);

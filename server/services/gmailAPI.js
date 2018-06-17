@@ -9,6 +9,9 @@ const { addToStore, addToHashMap } = require('./helpers/addTo');
 
 const noMessageIds = (messageIds) => !messageIds.length;
 
+const buildQuery = (addedNewsletters) =>
+  addedNewsletters.map(({ emailAddress }) => `from:${emailAddress}`).join(' OR ');
+
 const Gmail = {
   api: {},
   newsletterHashMap: new Map(),
@@ -50,9 +53,10 @@ const Gmail = {
     return Gmail.api.users.messages.batchModify(params);
   },
 
-  getMessageIds: (q) => {
+  getMessageIds: (maxResults) => (q) => {
     const params = {
       userId: 'me',
+      maxResults,
       q
     };
 
@@ -71,11 +75,14 @@ const Gmail = {
   getNewsletters: async (next, q = 'newsletter') => {
     Gmail._resetNewsletterHashMap();
 
-    const messageIds = await Gmail.getMessageIds(q).catch(handleError(next));
+    const maxResults = 100;
+
+    const messageIds = await Gmail.getMessageIds(maxResults)(q).catch(handleError(next));
 
     const messages = await Promise.all(messageIds.data.messages.map(Gmail.fetchMessage)).catch(
       handleError(next)
     );
+
     // TODO: use reduce to return hash map instead of creating an instance variable
     // TODO cont: this ensures the value is reset on each call of getInitialEmails
     messages.map(parseHeader).forEach(addToHashMap(Gmail.newsletterHashMap));
@@ -91,8 +98,9 @@ const Gmail = {
 
   addNewslettersToLabel: async ({ access_token }, queries, labelName, next) => {
     await Gmail.init({ access_token });
+    const maxResults = 10;
 
-    const messageIdsBlob = await Promise.all(queries.map(Gmail.getMessageIds)).catch(
+    const messageIdsBlob = await Promise.all(queries.map(Gmail.getMessageIds(maxResults))).catch(
       handleError(next)
     );
 
@@ -114,6 +122,30 @@ const Gmail = {
     );
 
     return { labelName, addedNewsletters, labelId: id };
+  },
+
+  addFilter: async ({ labelId, addedNewsletters }) => {
+    const params = {
+      userId: 'me',
+      resource: {
+        criteria: {
+          from: buildQuery(addedNewsletters)
+        },
+        action: {
+          addLabelIds: [labelId]
+        }
+      }
+    };
+    console.log(params.resource.criteria);
+    console.log(params.resource.action);
+
+    const test = await Gmail.api.users.settings.filters.create(params).catch((err) => {
+      err.errors ? console.log(err.errors[0].message) : console.log(err);
+    });
+
+    console.log(test);
+
+    return test;
   },
 
   deleteLabel: async ({ access_token }, labelId) => {
