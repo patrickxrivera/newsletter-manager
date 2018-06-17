@@ -29,14 +29,13 @@ const deleteLabel = async (req, res, next) => {
 
   const { credentials } = await Auth.updateTokens(id, next).catch(handleError(next));
 
-  await Gmail.deleteLabel(credentials, labelId).catch(handleError(next));
-
-  res.send({ success: true });
-
   await Promise.all([
-    query.updateUser(credentials, id).catch(next),
+    Gmail.deleteLabel(credentials, labelId),
+    query.updateUser(credentials, id),
     query.deleteLabel(id, labelId)
   ]);
+
+  res.send({ success: true });
 };
 
 const getLabels = async (req, res, next) => {

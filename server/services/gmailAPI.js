@@ -136,16 +136,8 @@ const Gmail = {
         }
       }
     };
-    console.log(params.resource.criteria);
-    console.log(params.resource.action);
 
-    const test = await Gmail.api.users.settings.filters.create(params).catch((err) => {
-      err.errors ? console.log(err.errors[0].message) : console.log(err);
-    });
-
-    console.log(test);
-
-    return test;
+    return Gmail.api.users.settings.filters.create(params);
   },
 
   deleteLabel: async ({ access_token }, labelId) => {
