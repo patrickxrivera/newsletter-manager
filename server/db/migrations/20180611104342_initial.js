@@ -14,24 +14,18 @@ exports.up = (knex, Promise) =>
       table.foreign('user_id').references('user_account.id');
     }),
 
-    knex.schema.createTable('email', (table) => {
-      table.string('email_address').primary();
-      table.string('account_name');
-    }),
-
     knex.schema.createTable('label_email', (table) => {
       table.increments('id').primary();
+      table.string('email_address');
+      table.string('account_name');
       table.string('label_id').unsigned();
       table.foreign('label_id').references('label.id');
-      table.string('email_address');
-      table.foreign('email_address').references('email.email_address');
     })
   ]);
 
 exports.down = (knex, Promise) =>
   Promise.all([
     knex.schema.dropTable('label_email'),
-    knex.schema.dropTable('email'),
     knex.schema.dropTable('label'),
     knex.schema.dropTable('user_account')
   ]);
