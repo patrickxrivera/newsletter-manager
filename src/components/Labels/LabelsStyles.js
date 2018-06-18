@@ -8,8 +8,6 @@ export const Wrapper = styled.div`
   background-color: rgb(233, 235, 238);
   height: 100vh;
   width: 100vw;
-
-  ${media.tablet`height: 100%;`};
 `;
 
 export const InnerWrapper = styled.div`

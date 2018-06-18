@@ -54,6 +54,11 @@ export const StyledLink = styled(NavLink)`
   }
 `;
 
+export const StyledLinkTitle = styled(NavLink)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 export const activeLink = {
   color: 'rgb(66, 66, 65)'
 };
