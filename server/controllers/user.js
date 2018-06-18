@@ -18,7 +18,7 @@ const redirect = async (req, res, next) => {
 
   const id = await query.handleCreateUser(tokens, data).catch(handleError(next));
 
-  res.redirect(keys.frontendRedirect + queryString.stringify({ id }));
+  res.redirect(`${keys.frontendRedirect}${id}`);
 };
 
 const getInitialEmails = async (req, res, next) => {
