@@ -7,10 +7,10 @@ import { getSavedLabels } from '../../reducers/labels/saved';
 
 class Redirect extends Component {
   componentDidMount() {
-    const { signInUser, history, savedLabels } = this.props;
-    const id = parseParams(window.location.search);
+    const { signInUser, history, savedLabels, match } = this.props;
+    const { params } = match;
 
-    signInUser(id);
+    signInUser(params);
 
     savedLabels !== null ? history.push('/labels') : history.push('/dashboard');
   }

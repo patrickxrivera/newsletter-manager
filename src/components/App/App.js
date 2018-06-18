@@ -25,7 +25,7 @@ const App = () => (
           <Route path="/labels" component={RequireAuth(LabelsContainer)} />
           <Route exact path="/label/new" component={RequireAuth(CreateLabelContainer)} />
           <Route path="/label/:labelId" component={RequireAuth(LabelWrapper)} />
-          <Route path="/redirect" component={Redirect} />
+          <Route path="/redirect/:id" component={Redirect} />
         </Switch>
       </Wrapper>
     </Router>
