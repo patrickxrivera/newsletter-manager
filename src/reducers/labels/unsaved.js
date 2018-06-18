@@ -16,6 +16,10 @@ export default handleActions(
       ...state,
       emails: state.emails.filter(isSelected(action.payload))
     }),
+    CLEAR_EMAILS: (state, action) => ({
+      ...state,
+      emails: []
+    }),
     ADD_ADDITIONAL_NEWSLETTER: (state, action) => ({
       ...state,
       additionalNewsletters: [...state.additionalNewsletters, action.payload]

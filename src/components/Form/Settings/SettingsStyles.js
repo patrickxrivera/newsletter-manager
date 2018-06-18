@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   margin: 0 auto 1rem;
 
   ${media.tablet`width: 90%`};
-  ${media.tablet`margin-bottom: 2rem`};
+  ${'' /* ${media.tablet`margin-bottom: 2rem`}; */} ${media.tablet`margin: 0`};
 `;
 
 export const CheckboxIcon = styled(Checkbox)`
