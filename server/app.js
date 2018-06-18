@@ -10,6 +10,7 @@ const app = express();
 
 app.use(helmet());
 app.use(cors());
+app.use('/', express.static(__dirname + '/html'));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
