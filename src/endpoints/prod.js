@@ -1,4 +1,4 @@
-const PROD_BASE_API = 'https://young-coast-38464.herokuapp.com/api';
+const PROD_BASE_API = 'https://newsletter-manager-backend.herokuapp.com/api';
 const PROD_ROOT = 'https://newsletter-manager.netlify.com';
 
 export default {
