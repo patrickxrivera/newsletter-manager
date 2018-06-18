@@ -2,11 +2,11 @@ const db = require('../config');
 const itemExists = require('../../utils/exists');
 
 const handleCreateUser = async ({ access_token, refresh_token }, { emailAddress }) => {
-  const existingId = await db('user_account')
-    .select('id')
+  const existingRefreshToken = await db('user_account')
+    .select('refresh_token')
     .where('email_address', emailAddress);
 
-  return itemExists(existingId)
+  return itemExists(existingRefreshToken)
     ? updateUserAccessToken(access_token)
     : createUser(access_token, refresh_token, emailAddress);
 };
