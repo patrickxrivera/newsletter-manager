@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server/index.js",
-    "dev": "nodemon ./server/index.js",
-    "test": "NODE_ENV=test nodemon --exec 'mocha -R min' \"server/**/*.test.js\""
+    "start": "node ./app/index.js",
+    "dev": "nodemon ./app/index.js",
+    "test": "NODE_ENV=test nodemon --exec 'mocha -R min' \"app/**/*.test.js\""
   },
   "repository": {
     "type": "git",
